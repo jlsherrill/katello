@@ -79,11 +79,43 @@ katello -u admin -p admin content definition add_repo  --org=ACME_Corporation --
 If you are just wanting to use content views as snapshots, filters are unecessary.  If, however, you want to filter what contents make it into the view, such as blacklisting a package by name or version, or blacklisting errata by date or type, filters can help accomplish these tasks.
 
 
-## Publishing a Content View  ##
+## Publishing a Content View Definition##
+ 
+Publishing a content view definition produces a new Content View with a version of 1, created within the Library environment.
+To publish a content view definition, simply navigate to Content > Content View Definitions > Select the desired definition > Publish (upper right corner of the details pane)
+
+<SCREENSHOT GOES HERE>
+
+From the cli:
+
+```
+katello -u admin -p admin content definition publish --org=ACME_Corporation --name="Custom RHEL" --view_name="My RHEL View" --view_label=my_rhel_view
+```
 
 
 Subscribing a System
 --------------------
+
+To subscribe a system that is not currently registered to the content view, simply use subscription manager on the client system and run:
+
+```
+subscription-manager register --org=ACME_Corporation --environment=Library/my_rhel_view
+
+```
+
+This would subscribe the system to the Library environment and the my_rhel_view content view.
+
+If the system is already registered, from the UI:
+
+Navigate to Systems > All > Select the desired system > Select Content View from the upper right of the details pane.
+
+<SCREEN SHOT GOES HERE>
+
+
+If the system is already registered, from the CLI:
+```
+katello -u admin -p admin system update --content_view_label=my_rhel_view  --name='system name'
+```
 
 
 Refreshing a content View
