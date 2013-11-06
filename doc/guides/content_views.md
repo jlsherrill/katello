@@ -128,7 +128,15 @@ this content view, it will need to be promoted to that environment.  For example
 to that version even if the version of "My RHEL View" changed in Library (at least until another promotion occured).  
 
 To promote a content view in the Web UI:
-<ADD COMPLICATED INSTRUCTIONS>
+a) Naviagate to Content > Changesets > Changeset Management
+b) Select the environment from the environment selector that you want to promote from
+c) Select "New Changeset" and provide a name
+d) Find the desired content view on the left and click 'add'
+e) Click review on the bottom 'action' bar on the right pane
+d) Click promote on the bottom 'action' bar on the right pane
+
+<SCREEN SHOTS GO HERE> 
+
 
 
 To promote a content view in the CLI:
