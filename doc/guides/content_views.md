@@ -144,6 +144,9 @@ To promote a content view in the CLI:
 katello -u admin -p admin content view promote --org=ACME_Corporation --name="My RHEL View" --environment=Dev
 ```
 
+This would promote to Dev from its previous environment (in this example that would be Library).
+
+
 Refreshing a content View
 -------------------------
 
