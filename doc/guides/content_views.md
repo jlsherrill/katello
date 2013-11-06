@@ -118,12 +118,48 @@ katello -u admin -p admin system update --content_view_label=my_rhel_view  --nam
 ```
 
 
-Refreshing a content View
--------------------------
-
 
 Promoting a Content View
 ------------------------
+
+Initially a Content View is published to Library as Version 1.  If you have systems in other environments that would like to consume
+this content view, it will need to be promoted to that environment.  For example, if i have published my content view definition as
+"My RHEL View", it created Version 1 in Library.  I could then promote Version 1, into my Dev environment.  Any systems in Dev would be locked
+to that version even if the version of "My RHEL View" changed in Library (at least until another promotion occured).  
+
+To promote a content view in the Web UI:
+<ADD COMPLICATED INSTRUCTIONS>
+
+
+To promote a content view in the CLI:
+```
+katello -u admin -p admin content view promote --org=ACME_Corporation --name="My RHEL View" --environment=Dev
+```
+
+Refreshing a content View
+-------------------------
+
+Refreshing a content view re-publishes the definition into an existing content view.  For example, if you have published "My RHEL View" and
+new errata are released and synced that you would like to include in your view.  Refreshing the view will replace the existing version of that 
+view in Library and replace it with a new version.  Any new content in the definition's repositories will appear in the version, and any new filters will 
+be applied.
+
+The versions that have been promoted to environments after Library will not be affected.  For example, if "My RHEL View" has Version 1
+in Production, Version 2, in Dev and Version 3 in Library, refreshing the view would replace Version 3 in Library with a new version, 4.
+
+Once the refresh is complete, any systems subscribe to the content view in Library will immediately have access to the new content.
+
+To refresh a content view from the web UI:
+
+Navigate to Content > Content View Definitions > Select the desired content view definition > Locate the desired content view and click 'refresh' on the right hand side of the pane.
+
+<SCREENSHOT GOES HERE>
+
+To refresh a content view from the CLI:
+```
+katello -u admin -p admin content view refresh --org=ACME_Corporation --name="My RHEL View"
+
+```
 
 
 
