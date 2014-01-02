@@ -75,7 +75,9 @@ module Glue::Pulp::Repo
           pre_queue.create(:name => "update pulp repo: #{self.name}", :priority => 2,
                            :action => [self, :refresh_pulp_repo, nil, nil, nil])
         end
-        if self.unprotected_changed?
+
+        # Only regenerate metadata if it is in default content view, since it will be done regardless if not
+        if self.unprotected_changed? && self.content_view.default?
           post_queue.create(:name => "generate metadata for pulp repo #{self.name}", :priority => 3, :action => [self, :generate_metadata])
         end
       end

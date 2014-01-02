@@ -187,5 +187,22 @@ class RepositoryInstanceTest < RepositoryTestBase
     refute rhel.save
     refute_empty rhel.errors
   end
+
+  def test_copy_clone_details
+    @fedora_17_x86_64.stubs(:checksum_type).returns('sha1')
+    @fedora_17_x86_64.unprotected = true
+    clone = @fedora_17_x86_64.create_clone(@staging)
+    assert_equal @fedora_17_x86_64.checksum_type, clone.checksum_type
+    assert_equal @fedora_17_x86_64.unprotected, clone.unprotected
+
+    @fedora_17_x86_64.unprotected = false
+    @fedora_17_x86_64.stubs(:checksum_type).returns('sha256')
+    @fedora_17_x86_64.save!
+
+    clone.copy_parent_details
+    assert_equal @fedora_17_x86_64.checksum_type, clone.checksum_type
+    assert_equal @fedora_17_x86_64.unprotected, clone.unprotected
+  end
+
 end
 end

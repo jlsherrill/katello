@@ -245,12 +245,25 @@ class Repository < ActiveRecord::Base
     reindex = options.fetch(:reindex, true) && Katello.config.use_elasticsearch
     publish = options.fetch(:publish, true) && Katello.config.use_pulp
 
+    repos.each do |repo|
+      repo = Repository.find(repo) #reload in case repo is readonly
+      repo.copy_parent_details
+      repo.save! if repo.changed?
+    end
+
     tasks = []
     tasks += repos.flat_map{|repo| repo.generate_metadata} if publish
     repos.each{|repo| repo.generate_applicability } #don't wait on applicability
     repos.each{|repo| repo.index_content } if reindex
 
     PulpTaskStatus.wait_for_tasks(tasks) if wait
+  end
+
+  def copy_parent_details
+    #copy details from the repository that this repo was cloned from
+    clone = self.environment.library? ? self.library_instance : self.get_clone(self.environment.prior)
+    self.unprotected = clone.unprotected
+    self.checksum_type = clone.checksum_type
   end
 
   # TODO: break up method

@@ -325,6 +325,8 @@ class GluePulpRepoContentsTest < GluePulpRepoTestBase
     Katello.config.stubs(:use_elasticsearch).returns(:true)
     pkg = @@fedora_17_x86_64.find_packages_by_nvre('elephant', '0.3', '0.8', '0')[0]
     @@fedora_17_x86_64.expects(:generate_metadata).returns([])
+    @@fedora_17_x86_64.expects(:copy_parent_details).returns([])
+
     Package.expects(:index_packages).with([pkg['_id']])
 
     unit = {:checksumtype => pkg['checksumtype'], :checksum => pkg['checksum'] }
