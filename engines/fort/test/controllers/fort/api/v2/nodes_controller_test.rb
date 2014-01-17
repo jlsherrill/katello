@@ -14,7 +14,7 @@
 require "fort_test_helper"
 
 module Fort
-class Api::V2::NodesControllerTest < Fort::TestCase
+class Api::V2::NodesControllerTest < ActionController::TestCase
 
   def setup
     setup_controller_defaults_api

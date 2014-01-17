@@ -13,9 +13,8 @@
 
 require "fort_test_helper"
 
-require 'support/fake_node_capability'
 module Fort
-class Api::V2::NodeCapabilitiesControllerTest < Fort::TestCase
+class Api::V2::NodeCapabilitiesControllerTest < ActionController::TestCase
 
   def setup
     setup_controller_defaults_api
@@ -31,6 +30,7 @@ class Api::V2::NodeCapabilitiesControllerTest < Fort::TestCase
 
   test 'test index should be successful' do
     get :index, :node_id => @node.id
+    debugger
     assert_response :success
     assert_protected_action(:index, [@read_perm, @edit_perm], [NO_PERMISSION]) do
       get :index, :node_id => @node.id
