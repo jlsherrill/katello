@@ -11,18 +11,18 @@
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
-require "test_helper"
+require "fort_test_helper"
 
 require 'support/fake_node_capability'
-
-class Api::V1::NodeCapabilitiesControllerTest < MiniTest::Rails::ActionController::TestCase
-  fixtures :all
+module Fort
+class Api::V2::NodeCapabilitiesControllerTest < Fort::TestCase
 
   def setup
-    @org = organizations(:acme_corporation)
+    setup_controller_defaults_api
+    @org = get_organization(:organization1)
     login_user(User.find(users(:admin)), @org)
 
-    @system = System.find(systems(:simple_server))
+    @system = Katello::System.find(katello_systems(:simple_server))
     @node = Node.create(:system => @system)
 
     @read_perm = UserPermission.new(:read, :organizations, nil, nil)
@@ -86,4 +86,5 @@ class Api::V1::NodeCapabilitiesControllerTest < MiniTest::Rails::ActionControlle
 
   end
 
+end
 end

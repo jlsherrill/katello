@@ -10,7 +10,7 @@
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
-class Api::V1::NodeCapabilitiesController < Api::V1::ApiController
+class Fort::Api::V1::NodeCapabilitiesController < Katello::Api::V1::ApiController
 
   before_filter :authorize
   before_filter :find_node

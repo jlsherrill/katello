@@ -10,10 +10,10 @@
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
-class Api::V2::NodesController < Api::V1::NodesController
+class Fort::Api::V2::NodesController < Fort::Api::V1::NodesController
 
   respond_to :json
-  include Api::V2::Rendering
+  include Katello::Api::V2::Rendering
 
   resource_description do
     api_version "v2"

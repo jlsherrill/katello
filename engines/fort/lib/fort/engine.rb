@@ -13,8 +13,14 @@
 module Fort
   class Engine < ::Rails::Engine
 
+    #isolate_namespace Fort
+
+    initializer 'fort.mount_engine', :after => :build_middleware_stack do |app|
+      app.routes_reloader.paths << "#{Fort::Engine.root}/config/mount_engine.rb"
+    end
+
     config.to_prepare do
-      ::System.send :include, Fort::Concerns::System
+      Katello::System.send :include, Fort::Concerns::System
     end
 
     initializer "fort.load_app_instance_data" do |app|
@@ -22,7 +28,15 @@ module Fort
     end
 
     config.after_initialize do
-      Dir[File.expand_path('../actions/*.rb', __FILE__)].each { |f| require f }
+      #Dir[File.expand_path('../actions/*.rb', __FILE__)].each { |f| require f }
+    end
+
+    rake_tasks do
+      load "#{Fort::Engine.root}/lib/fort/tasks/test.rake"
+    end
+
+    initializer "fort.paths" do |app|
+      app.routes_reloader.paths << "#{Fort::Engine.root}/config/routes.rb"
     end
 
   end

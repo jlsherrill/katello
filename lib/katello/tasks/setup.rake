@@ -29,7 +29,7 @@ namespace :katello do
     end
 
     task :elasticsearch => ['environment'] do
-      User.current = User.hidden.first
+      #User.current = User.hidden.first
       Dir.glob(Katello::Engine.root.to_s + '/app/models/katello/*.rb').each { |file| require file }
 
       Katello::Util::Search.active_record_search_classes.each do |model|

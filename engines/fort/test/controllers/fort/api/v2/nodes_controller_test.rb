@@ -11,16 +11,17 @@
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
-require "test_helper"
+require "fort_test_helper"
 
-class Api::V1::NodesControllerTest < MiniTest::Rails::ActionController::TestCase
-  fixtures :all
+module Fort
+class Api::V2::NodesControllerTest < Fort::TestCase
 
   def setup
-    @org = organizations(:acme_corporation)
+    setup_controller_defaults_api
+    @org =  get_organization(:organization1)
     @library = @org.library
     login_user(User.find(users(:admin)), @org)
-    @system = System.find(systems(:simple_server))
+    @system = Katello::System.find(katello_systems(:simple_server))
 
     @read_perm = UserPermission.new(:read, :organizations, nil, nil)
     @edit_perm = UserPermission.new(:manage_nodes, :organizations, nil, nil)
@@ -94,4 +95,5 @@ class Api::V1::NodesControllerTest < MiniTest::Rails::ActionController::TestCase
     end
   end
 
+end
 end
