@@ -9,8 +9,8 @@
 # NON-INFRINGEMENT, or FITNESS FOR A PARTICULAR PURPOSE. You should
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
-
-class Fort::Api::V2::NodesController < Fort::Api::V1::NodesController
+module Fort
+class Api::V2::NodesController < Api::V1::NodesController
 
   respond_to :json
   include Katello::Api::V2::Rendering
@@ -38,4 +38,5 @@ class Fort::Api::V2::NodesController < Fort::Api::V1::NodesController
 
     respond_for_index :collection => collection
   end
+end
 end

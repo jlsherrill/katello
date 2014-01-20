@@ -9,9 +9,10 @@
 # NON-INFRINGEMENT, or FITNESS FOR A PARTICULAR PURPOSE. You should
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
-
-class Fort::Api::V2::NodeCapabilitiesController < Fort::Api::V1::NodeCapabilitiesController
+module Fort
+class Api::V2::NodeCapabilitiesController < Api::V1::NodeCapabilitiesController
 
   include Katello::Api::V2::Rendering
 
+end
 end
