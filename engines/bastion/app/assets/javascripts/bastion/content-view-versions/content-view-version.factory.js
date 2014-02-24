@@ -13,26 +13,24 @@
 
 /**
  * @ngdoc service
- * @name  Bastion.content-views.factory:ContentView
+ * @name  Bastion.content-views.factory:ContentViewVersion
  *
  * @requires $resource
  * @requires CurrentOrganization
  *
  * @description
- *   Provides a $resource for interacting with environments.
+ *   Provides a $resource for interacting with Content View Versions.
  */
-angular.module('Bastion.content-views').factory('ContentView',
+angular.module('Bastion.content-view-versions').factory('ContentViewVersion',
     ['$resource', 'CurrentOrganization',
     function ($resource, CurrentOrganization) {
 
-        return $resource('/api/v2/content_views/:id/:action',
+        return $resource('/api/v2/content_view_versions/:id/:action',
             {id: '@id', 'organization_id': CurrentOrganization},
             {
                 query:  {method: 'GET', isArray: false},
                 update: {method: 'PUT'},
-                publish: {method: 'POST', params: {action: 'publish'}},
-                versions: {method: 'GET', isArray: false, params: {action: 'content_view_versions'}}
-                //puppetModules: {method: 'GET', isArray: false, params: {action: puppet_modules}}
+                promote: {method: 'POST', params: {action: 'promote'}}
             }
         );
 

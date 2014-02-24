@@ -61,6 +61,9 @@
 //= require "bastion/content-views/content-views.module"
 //= require_tree "./content-views"
 
+//= require "bastion/content-view-versions/content-view-versions.module.js"
+//= require_tree "./content-view-versions"
+
 //= require "bastion/errata/errata.module"
 //= require_tree "./errata"
 
