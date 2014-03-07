@@ -1,4 +1,10 @@
+<span page-title ng-model="contentView">{{ 'Available Puppet Modules for Content View:' | translate }} {{ contentView.name }}</span>
+
 <div class="details details-full">
+  <div class="loading-mask loading-mask-panel" ng-show="namesLoading">
+    <i class="icon-spinner icon-spin"></i>
+    {{ "Loading..." | translate }}
+  </div>
 
   <a ui-sref="content-views.details.puppet-modules.list" >
     <i class="icon-double-angle-left"></i>
@@ -23,10 +29,10 @@
     </thead>
 
     <tbody>
-      <tr alch-table-row ng-repeat="item in names | filter:filterTerm">
-        <td alch-table-cell >{{ item.name }}</td>
+      <tr alch-table-row ng-repeat="item in names.results | filter:filterTerm">
+        <td alch-table-cell >{{ item.module_name }}</td>
         <td alch-table-cell >
-          <button translate ng-click="selectVersion(item.name)">
+          <button translate ng-click="selectVersion(item.module_name)">
             Select a Version
           </button>
         </td>
@@ -35,6 +41,3 @@
   </table>
 </div>
 
-<button translate ui-sref="content-views.details.puppet-modules.list">
-  Cancel
-</button>

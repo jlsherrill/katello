@@ -16,23 +16,28 @@
  * @name  Bastion.content-views.controller:ContentViewPuppetModulesController
  *
  * @requires $scope
+ * @requires ContentView
  *
  * @description
- *   Provides the functionality specific to ContentViews for use with the Nutupane UI pattern.
- *   Defines the columns to display and the transform function for how to generate each row
- *   within the table.
  */
 angular.module('Bastion.content-views').controller('ContentViewPuppetModuleNamesController',
     ['$scope', 'ContentView', function ($scope, ContentView) {
+        $scope.namesLoading = true;
 
+        $scope.names = ContentView.availablePuppetModuleNames(
+            {id: $scope.$stateParams.contentViewId},
+            function () {
+                $scope.namesLoading = false;
+            }
+        );
 
-        console.log($scope)
-        $scope.names = ContentView.availablePuppetModuleNames({id: $scope.$stateParams.contentViewId}).results;
-
-        $scope.selectVersion = function(name) {
-            $scope.$parent.currentModule = {name: name};
+        $scope.selectVersion = function (moduleName) {
             $scope.transitionTo('content-views.details.puppet-modules.versions',
-                {contentViewId: $scope.$stateParams.contentViewId})
+                {
+                    contentViewId: $scope.$stateParams.contentViewId,
+                    moduleName: moduleName
+                }
+            );
         };
 
     }]

@@ -42,7 +42,6 @@ module Katello
       @fake_search_service = @controller.load_search_service(Support::SearchService::FakeSearchService.new)
       models
       permissions
-      Katello::PuppetModule.stubs(:exists?).returns(true)
     end
 
     def test_index
