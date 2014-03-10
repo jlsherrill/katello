@@ -49,12 +49,7 @@ class GluePulpRepoTestCreateDestroy < GluePulpRepoTestBase
 
   def test_create_pulp_repo
     assert @fedora_17_x86_64.create_pulp_repo
-    @fedora_17_x86_64.destroy_repo
-  end
-
-  def test_destroy_repo
-    @fedora_17_x86_64.create_pulp_repo
-    assert @fedora_17_x86_64.destroy_repo
+    ::ForemanTasks.sync_task(::Actions::Pulp::Repository::Destroy, :pulp_id => @fedora_17_x86_64.pulp_id)
   end
 
 end
@@ -68,8 +63,8 @@ class GluePulpRepoTest < GluePulpRepoTestBase
   end
 
   def self.after_suite
-    @@fedora_17_x86_64.destroy_repo
-    VCR.eject_cassette
+    ::ForemanTasks.sync_task(::Actions::Pulp::Repository::Destroy, :pulp_id => @@fedora_17_x86_64.pulp_id)
+        VCR.eject_cassette
   end
 
   def setup
@@ -134,7 +129,7 @@ class GluePulpRepoAfterSyncTest < GluePulpRepoTestBase
   end
 
   def self.after_suite
-    @@fedora_17_x86_64.destroy_repo
+    ::ForemanTasks.sync_task(::Actions::Pulp::Repository::Destroy, :pulp_id => @@fedora_17_x86_64.pulp_id)
     VCR.eject_cassette
   end
 
@@ -168,7 +163,7 @@ class GluePulpChangeFeedTest < GluePulpRepoTestBase
   end
 
   def self.after_suite
-    @@fedora_17_x86_64.destroy_repo
+    ::ForemanTasks.sync_task(::Actions::Pulp::Repository::Destroy, :pulp_id => @@fedora_17_x86_64.pulp_id)
     VCR.eject_cassette
   end
 
@@ -195,7 +190,7 @@ class GluePulpPuppetRepoTest < GluePulpRepoTestBase
   end
 
   def self.after_suite
-    @@p_forge.destroy_repo
+    ::ForemanTasks.sync_task(::Actions::Pulp::Repository::Destroy, :pulp_id => @@p_forge.pulp_id)
     VCR.eject_cassette
   end
 
@@ -234,7 +229,7 @@ class GluePulpRepoContentsTest < GluePulpRepoTestBase
   end
 
   def self.after_suite
-    @@fedora_17_x86_64.destroy_repo
+    ::ForemanTasks.sync_task(::Actions::Pulp::Repository::Destroy, :pulp_id => @@fedora_17_x86_64.pulp_id)
     VCR.eject_cassette
   end
 
@@ -349,7 +344,7 @@ class GluePulpRepoOperationsTest < GluePulpRepoTestBase
   end
 
   def self.after_suite
-    @@fedora_17_x86_64.destroy_repo
+    ::ForemanTasks.sync_task(::Actions::Pulp::Repository::Destroy, :pulp_id => @@fedora_17_x86_64.pulp_id)
     VCR.eject_cassette
   end
 
@@ -375,7 +370,7 @@ class GluePulpRepoOperationsTest < GluePulpRepoTestBase
 
     TaskSupport.wait_on_tasks(task_list)
   ensure
-    @@fedora_17_x86_64_dev.destroy_repo
+    ::ForemanTasks.sync_task(::Actions::Pulp::Repository::Destroy, :pulp_id => @@fedora_17_x86_64_dev.pulp_id)
   end
 
 end
