@@ -19,7 +19,8 @@ describe('Controller: ContentViewVersionsController', function() {
     beforeEach(inject(function($injector) {
         var gettext = function() {},
             $controller = $injector.get('$controller'),
-            ContentViewVersion = $injector.get('MockResource').$new();
+            ContentViewVersion = $injector.get('MockResource').$new(),
+            ContentView = $injector.get('MockResource').$new();
 
         AggregateTask = {newAggregate: function(){}};
 
