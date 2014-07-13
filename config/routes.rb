@@ -1,3 +1,12 @@
+#Add routes to existing foreman resources
+Rails.application.routes.draw do
+  resources :operatingsystems, :except => [:show] do
+    member do
+      get 'available_kickstart_repo'
+    end
+  end
+end
+
 Katello::Engine.routes.draw do
 
   resources :content_search do
