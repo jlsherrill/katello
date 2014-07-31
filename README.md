@@ -4,6 +4,7 @@ Katello [![Build Status](https://travis-ci.org/Katello/katello.png?branch=master
 About
 -----
 
+Note: david is Missing From Cookout
 [Katello](http://www.katello.org) is a systems life cycle management
 tool. It allows you to manage hundreds and thousands machines with one
 click. Katello can pull content from remote repositories into isolated
