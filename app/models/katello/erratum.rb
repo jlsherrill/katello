@@ -32,17 +32,19 @@ module Katello
     has_many :cves, :class_name => "Katello::ErratumCve", :dependent => :destroy, :inverse_of => :erratum
     has_many :packages, :class_name => "Katello::ErratumPackage", :dependent => :destroy, :inverse_of => :erratum
 
+    belongs_to :erratum_type, :class_name => "Katello::ErratumType"
+
     scoped_search :on => :errata_id, :rename => :id
     scoped_search :on => :title, :only_explicit => true
     scoped_search :on => :severity, :complete_value => true
-    scoped_search :on => :errata_type, :rename => :type, :complete_value => true
+    scoped_search :in => :erratum_type, :on => :name, :rename => :type, :complete_value => true
     scoped_search :in => :cves, :on => :cve_id, :rename => :cve
     scoped_search :in => :bugzillas, :on => :bug_id, :rename => :bug
     scoped_search :in => :packages, :on => :nvrea, :rename => :package, :complete_value => true
     scoped_search :in => :packages, :on => :name, :rename => :package_name, :complete_value => true
 
-    def self.of_type(type)
-      where(:errata_type => type)
+    def self.of_type(errata_type)
+      self.joins(:erratum_type).where("#{Katello::ErratumType.table_name}.name" => errata_type)
     end
 
     scope :security, of_type(Erratum::SECURITY)
