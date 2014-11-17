@@ -63,11 +63,36 @@ module Katello
         where("#{Katello::SystemRepository.table_name}.repository_id = #{Katello::RepositoryErratum.table_name}.repository_id")
     end
 
+    #def systems_unavailable
+    #  self.systems_applicable.joins(:system_repositories).joins("INNER JOIN #{Katello::RepositoryErratum.table_name} on \
+    #     #{Katello::RepositoryErratum.table_name}.erratum_id = #{Katello::SystemErratum.table_name}.erratum_id").
+    #      where("#{Katello::RepositoryErratum.table_name}.erratum_id = #{self.id}").
+    #    where("#{Katello::System.table_name}.id not in (
+    #      select SR2.system_id
+    #      from #{Katello::SystemRepository.table_name} as SR2
+    #      where SR2.repository_id = #{Katello::RepositoryErratum.table_name}.repository_id
+    #  )")
+    #end
+
+    def systems_unavailable
+      self.systems_applicable.where("#{Katello::System.table_name}.id not in (#{self.systems_available.select("#{Katello::System.table_name}.id").to_sql})")
+    end
+
     def self.available_for_systems(systems)
       Katello::Erratum.joins(:system_errata).joins(:repository_errata).joins("INNER JOIN #{Katello::SystemRepository.table_name} on \
         #{Katello::SystemRepository.table_name}.system_id = #{Katello::SystemErratum.table_name}.system_id").
         where("#{Katello::SystemRepository.table_name}.system_id" => [systems.map(&:id)]).
           where("#{Katello::SystemRepository.table_name}.repository_id = #{Katello::RepositoryErratum.table_name}.repository_id")
+    end
+
+    def self.unavailable_for_systems(systems)
+      self.applicable_to_systems(systems).joins("INNER JOIN #{Katello::SystemRepository.table_name} on \
+              #{Katello::SystemRepository.table_name}.system_id = #{Katello::SystemErratum.table_name}.system_id").where(
+          "#{table_name}.id not in (
+            select RE2.erratum_id
+            from #{Katello::RepositoryErratum.table_name} as RE2
+            where RE2.repository_id = #{Katello::SystemRepository.table_name}.repository_id
+      )")
     end
 
     def update_from_json(json)
