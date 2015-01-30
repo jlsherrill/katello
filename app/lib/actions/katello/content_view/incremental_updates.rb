@@ -19,9 +19,15 @@ module Actions
           sequence do
             concurrence do
               version_environments.each do |version_environment|
-                action = plan_action(ContentViewVersion::IncrementalUpdate, version_environment[:content_view_version],
+                version = version_environment[:content_view_version]
+                if version.content_view.composite?
+                  fail _("Cannot perform an incremental update on a Composite Content View Version (%{name} version version %{version}") %
+                  {:name => version.content_view.name, :version => version.version}
+                end
+
+                action = plan_action(ContentViewVersion::IncrementalUpdate, version,
                             version_environment[:environments], :resolve_dependencies => dep_solve, :content => content, :description => description)
-                old_new_version_map[version_environment[:content_view_version]] = action.new_content_view_version
+                old_new_version_map[version] = action.new_content_view_version
               end
             end
             handle_composites(old_new_version_map, description, content[:puppet_module_ids]) if propagate_composites
