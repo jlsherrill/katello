@@ -16,7 +16,13 @@ module Actions
           end
 
           def humanized_name
-            _("Install erratum")
+            if input[:system] && input[:errata]
+              n_("Install %{count} erratum on %{name}", "Install %{count} errata on %{name}", input[:errata].count) %
+                  {:name => input[:system][:name], :count => input[:errata].count}
+            else
+              _("Install erratum")
+            end
+
           end
 
           def humanized_input

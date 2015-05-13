@@ -11,8 +11,19 @@ module Actions
             plan_action(Actions::Katello::System::Erratum::Install, system, applicable_errata.pluck(:errata_id))
           end
 
+          def save_input(system, errata_uuids)
+            input[:errata_count] = errata_uuids.count
+            input[:system_name] = system.name
+          end
+
           def humanized_name
-            _("Install Applicable Errata")
+            if input[:system_name]
+              n_("Install %{count} Applicable Erratum on %{name}",
+                 "Install %{count} Applicable Erratum on %{name}", input[:errata_count]) %
+                  {:count => input[:errata_count], :name => input[:system_name] }
+            else
+              n_("Install Applicable Errata")
+            end
           end
 
           def presenter
