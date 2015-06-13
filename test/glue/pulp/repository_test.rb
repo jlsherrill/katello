@@ -280,10 +280,6 @@ module Katello
       refute_empty @@fedora_17_x86_64.find_packages_by_nvre('elephant', '0.3', '0.8', '0')
     end
 
-    def test_find_latest_packages_by_name
-      refute_empty @@fedora_17_x86_64.find_latest_packages_by_name('elephant')
-    end
-
     def test_package_groups
       package_groups = @@fedora_17_x86_64.package_groups
 

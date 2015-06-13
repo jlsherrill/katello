@@ -11,7 +11,15 @@ module Katello
       extend ::Apipie::DSL::Concern
 
       def index
-        respond(:collection => scoped_search(index_relation.uniq, default_sort[0], default_sort[1]))
+        sort_options = []
+        options = {}
+        if default_sort.is_a?(Array)
+          sort_options = default_sort
+        else
+          options[:custom_sort] =  default_sort
+        end
+
+        respond(:collection => scoped_search(index_relation.uniq, sort_options[0], sort_options[1], options))
       end
 
       api :GET, "/compare/", N_("List :resource_id")

@@ -138,18 +138,6 @@ module Katello
         distribution.flatten(1)
       end
 
-      def find_latest_packages_by_name(env, name)
-        packs = self.repos(env).collect do |repo|
-          repo.find_latest_packages_by_name(name).collect do |pack|
-            pack[:repo_id] = repo.id
-            pack
-          end
-        end
-        packs.flatten!(1)
-
-        Util::Package.find_latest_packages packs
-      end
-
       def promoted_to?(target_env)
         target_env.products.include? self
       end

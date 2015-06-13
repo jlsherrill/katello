@@ -83,6 +83,8 @@ module FixtureTestCase
     self.set_fixture_class :katello_erratum_cves => "Katello::ErratumCve"
     self.set_fixture_class :katello_repository_errata => "Katello::RepositoryErratum"
     self.set_fixture_class :katello_system_errata => "Katello::SystemErratum"
+    self.set_fixture_class :katello_rpms => "Katello::Rpm"
+    self.set_fixture_class :katello_repository_rpms => "Katello::RepositoryRpm"
 
     load_fixtures
     self.fixture_path = "#{Katello::Engine.root}/test/fixtures/models"
