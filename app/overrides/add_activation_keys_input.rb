@@ -1,11 +1,11 @@
 Deface::Override.new(:virtual_path => "hostgroups/_form",
                      :name => "add_activation_keys_tab",
-                     :insert_after => 'ul.nav > code[erb-silent]:contains("show_organization_tab?") ~ code[erb-silent]:contains("end")',
+                     :insert_bottom => 'ul.nav-tabs',
                      :partial => '../overrides/foreman/activation_keys/host_tab')
 
 Deface::Override.new(:virtual_path => "hostgroups/_form",
                      :name => "add_activation_keys_tab_pane",
-                     :insert_after => 'code[erb-loud]:contains("render"):contains("taxonomies/loc_org_tabs")',
+                     :insert_bottom => 'div.tab-pane',
                      :partial => '../overrides/foreman/activation_keys/host_tab_pane')
 
 Deface::Override.new(:virtual_path => "hostgroups/_form",
