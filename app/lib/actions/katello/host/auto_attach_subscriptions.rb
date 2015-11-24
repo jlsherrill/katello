@@ -1,12 +1,12 @@
 module Actions
   module Katello
-    module System
+    module Host
       class AutoAttachSubscriptions < Actions::EntryAction
         middleware.use ::Actions::Middleware::RemoteAction
 
-        def plan(system)
-          action_subject system
-          plan_action(::Actions::Candlepin::Consumer::AutoAttachSubscriptions, system) if ::SETTINGS[:katello][:use_cp]
+        def plan(host)
+          action_subject host.subscription_aspect
+          plan_action(::Actions::Candlepin::Consumer::AutoAttachSubscriptions, host.subscription_aspect)
         end
 
         def finalize

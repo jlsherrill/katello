@@ -6,8 +6,8 @@ module Actions
           param :uuid, String
         end
 
-        def plan(system)
-          plan_self(:uuid => system.uuid)
+        def plan(subscription_aspect)
+          plan_self(:uuid => subscription_aspect.uuid)
         end
 
         def run
