@@ -87,12 +87,6 @@ module Katello
       render :json => r
     end
 
-    #api :GET, "/consumers/:id", N_("Show a system")
-    #param :id, String, :desc => N_("UUID of the consumer"), :required => true
-    def consumer_show
-      render :json => Resources::Candlepin::Consumer.get(@host.subscription_facet.uuid)
-    end
-
     #api :GET, "/owners/:organization_id/environments", N_("List environments for RHSM")
     def rhsm_index
       organization = find_organization
@@ -462,7 +456,7 @@ module Katello
            "rhsm_proxy_consumer_entitlements_path", "rhsm_proxy_consumer_entitlements_post_path",
            "rhsm_proxy_consumer_entitlements_delete_path",
            "rhsm_proxy_consumer_dryrun_path", "rhsm_proxy_consumer_owners_path",
-           "rhsm_proxy_consumer_compliance_path"
+           "rhsm_proxy_consumer_compliance_path", "rhsm_proxy_consumer_path"
         User.consumer? && current_user.uuid == params[:id]
       when "rhsm_proxy_consumer_certificates_delete_path"
         User.consumer? && current_user.uuid == params[:consumer_id]
