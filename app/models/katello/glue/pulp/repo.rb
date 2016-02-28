@@ -305,14 +305,6 @@ module Katello
         Katello.pulp_server.extensions.repository.errata_ids(self.pulp_id)
       end
 
-      def package_group_count
-        content_unit_counts = 0
-        if self.pulp_repo_facts
-          content_unit_counts = self.pulp_repo_facts[:content_unit_counts][:package_group]
-        end
-        content_unit_counts
-      end
-
       # remove errata and groups from this repo
       # that have no packages
       def purge_empty_groups_errata
@@ -344,68 +336,33 @@ module Katello
         end
       end
 
-      def index_db_errata(force = false)
+      def index_content_unit(content_class, json_method, ids_method, force)
         if self.content_view.default? || force
-          errata_json.each do |erratum_json|
-            begin
-              erratum = Erratum.where(:uuid => erratum_json['_id']).first_or_create
-            rescue ActiveRecord::RecordNotUnique
-              retry
+          self.send(json_method) do |units|
+            units.each do |unit_json|
+              begin
+                unit = content_class.where(:uuid => unit_json['_id']).first_or_create
+              rescue ActiveRecord::RecordNotUnique
+                retry
+              end
+              unit.update_from_json(unit_json)
             end
-            erratum.update_from_json(erratum_json)
           end
         end
 
-        Katello::Erratum.sync_repository_associations(self, pulp_errata_ids)
+        content_class.sync_repository_associations(self, self.send(ids_method))
+      end
+
+      def index_db_errata(force = false)
+        index_content_unit(Katello::Erratum, :errata_json, :pulp_errata_ids, force)
       end
 
       def index_db_rpms(force = false)
-        if self.content_view.default? || force
-          rpms_json.each do |rpm_json|
-            begin
-              rpm = Rpm.where(:uuid => rpm_json['_id']).first_or_create
-            rescue ActiveRecord::RecordNotUnique
-              retry
-            end
-            rpm.update_from_json(rpm_json)
-          end
-        end
-        Katello::Rpm.sync_repository_associations(self, pulp_rpm_ids)
+        index_content_unit(Katello::Rpm, :rpms_json, :pulp_rpm_ids, force)
       end
 
       def index_db_puppet_modules(force = false)
-        if self.content_view.default? || force
-          puppet_modules_json.each do |puppet_module_json|
-            begin
-              puppet_module = Katello::PuppetModule.where(:uuid => puppet_module_json['_id']).first_or_create
-            rescue ActiveRecord::RecordNotUnique
-              retry
-            end
-            puppet_module.update_from_json(puppet_module_json)
-          end
-        end
-
-        Katello::PuppetModule.sync_repository_associations(self, pulp_puppet_module_ids)
-      end
-
-      def puppet_modules_json
-        tmp_puppet_modules = []
-        #we fetch ids and then fetch errata by id, because repo errata
-        #  do not contain all the info we need (bz 854260)
-        self.pulp_puppet_module_ids.each_slice(SETTINGS[:katello][:pulp][:bulk_load_size]) do |sub_list|
-          tmp_puppet_modules.concat(Katello.pulp_server.extensions.puppet_module.find_all_by_unit_ids(sub_list))
-        end
-        tmp_puppet_modules
-      end
-
-      def errata_json
-        tmp_errata = []
-        #we fetch ids and then fetch errata by id, because repo errata
-        #  do not contain all the info we need (bz 854260)
-        self.pulp_errata_ids.each_slice(SETTINGS[:katello][:pulp][:bulk_load_size]) do |sub_list|
-          tmp_errata.concat(Katello.pulp_server.extensions.errata.find_all_by_unit_ids(sub_list))
-        end
-        tmp_errata
+        index_content_unit(Katello::PuppetModule, :puppet_modules_json, :pulp_puppet_module_ids, force)
       end
 
       def index_db_package_groups
@@ -421,6 +378,36 @@ module Katello
         Katello::PackageGroup.sync_repository_associations(self, pg_ids)
       end
 
+      def puppet_modules_json
+        tmp_puppet_modules = []
+        #we fetch ids and then fetch errata by id, because repo errata
+        #  do not contain all the info we need (bz 854260)
+        self.pulp_puppet_module_ids.each_slice(SETTINGS[:katello][:pulp][:bulk_load_size]) do |sub_list|
+          page = Katello.pulp_server.extensions.puppet_module.find_all_by_unit_ids(sub_list)
+          if block_given?
+            yield(page)
+          else
+            tmp_puppet_modules.concat(page)
+          end
+        end
+        tmp_puppet_modules
+      end
+
+      def errata_json
+        tmp_errata = []
+        #we fetch ids and then fetch errata by id, because repo errata
+        #  do not contain all the info we need (bz 854260)
+        self.pulp_errata_ids.each_slice(SETTINGS[:katello][:pulp][:bulk_load_size]) do |sub_list|
+          page = Katello.pulp_server.extensions.errata.find_all_by_unit_ids(sub_list)
+          if block_given?
+            yield(page)
+          else
+            tmp_errata.concat(page)
+          end
+        end
+        tmp_errata
+      end
+
       def package_group_json
         Katello.pulp_server.extensions.repository.package_groups(self.pulp_id)
       end
@@ -428,8 +415,12 @@ module Katello
       def rpms_json
         tmp_packages = []
         self.pulp_rpm_ids.each_slice(SETTINGS[:katello][:pulp][:bulk_load_size]) do |sub_list|
-          tmp_packages.concat(Katello.pulp_server.extensions.rpm.find_all_by_unit_ids(
-                                  sub_list, ::Katello::Pulp::Rpm::PULP_INDEXED_FIELDS))
+          page = Katello.pulp_server.extensions.rpm.find_all_by_unit_ids(sub_list, ::Katello::Pulp::Rpm::PULP_INDEXED_FIELDS)
+          if block_given?
+            yield(page)
+          else
+            tmp_packages.concat(page)
+          end
         end
         tmp_packages
       end
