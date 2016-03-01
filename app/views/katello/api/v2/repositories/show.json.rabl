@@ -35,7 +35,7 @@ node :permissions do |repo|
   }
 end
 
-child :gpg_key do |_gpg|
+child :gpg_key do |_gpg|w
   attribute :name
   attribute :id
 end

@@ -14,7 +14,7 @@ module Katello
     before_filter :find_organization_from_repo, :only => [:update]
     before_filter :find_gpg_key, :only => [:create, :update]
     before_filter :error_on_rh_product, :only => [:create]
-    before_filter :error_on_rh_repo, :only => [:update, :destroy]
+    before_filter :error_on_rh_repo, :only => [:destroy]
 
     skip_before_filter :authorize, :only => [:sync_complete, :gpg_key_content]
     skip_before_filter :require_org, :only => [:sync_complete]
@@ -209,7 +209,6 @@ module Katello
     param :mirror_on_sync, :bool, :desc => N_("true if this repository when synced has to be mirrored from the source and stale rpms removed.")
     def update
       repo_params = repository_params
-      repo_params[:url] = nil if repository_params[:url].blank? && !@repository.ostree?
       sync_task(::Actions::Katello::Repository::Update, @repository, repo_params)
       respond_for_show(:resource => @repository)
     end
@@ -338,8 +337,9 @@ module Katello
     end
 
     def repository_params
-      keys = [:url, :gpg_key_id, :unprotected, :name, :checksum_type, :docker_upstream_name, :download_policy, :mirror_on_sync, :ostree_branches => []]
+      keys = [:download_policy, :mirror_on_sync, :ostree_branches => []]
       keys += [:label, :content_type] if params[:action] == "create"
+      keys += [:url, :gpg_key_id, :unprotected, :name, :checksum_type, :docker_upstream_name, ] if @repository.custom?
       params.require(:repository).permit(*keys)
     end
 
