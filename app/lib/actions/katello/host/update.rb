@@ -8,6 +8,12 @@ module Actions
           action_subject host
           plan_self(:hostname => host.name)
 
+
+          if host.installed_products
+            consumer_params ||= {}
+            consumer_params['installedProducts'] = host.installed_products
+          end
+
           sequence do
             host.content_facet.save! if host.content_facet
 

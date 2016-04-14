@@ -11,7 +11,8 @@ module Katello
 
       DEFAULT_TYPE = Glue::Candlepin::Consumer::SYSTEM
 
-      attr_accessible :release_version, :autoheal, :service_level, :host
+      attr_accessible :release_version, :autoheal, :service_level, :host, :installed_products
+      attr_accessor :installed_products
 
       def update_from_consumer_attributes(consumer_params)
         self.autoheal = consumer_params['autoheal'] unless consumer_params['autoheal'].blank?
@@ -97,6 +98,8 @@ module Katello
       end
 
       def backend_update_needed?
+        return true if self.installed_products
+
         %w(release_version service_level autoheal).each do |method|
           return true if self.send("#{method}_changed?")
         end
