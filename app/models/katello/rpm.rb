@@ -7,6 +7,10 @@ module Katello
     has_many :repositories, :through => :repository_rpms, :class_name => "Katello::Repository"
     has_many :repository_rpms, :class_name => "Katello::RepositoryRpm", :dependent => :destroy, :inverse_of => :rpm
 
+    has_many :content_facets, :through => :content_facet_applicable_rpms, :class_name => "Katello::Host::ContentFacet"
+    has_many :content_facet_applicable_rpms, :class_name => "Katello::ContentFacetApplicableRpm",
+             :dependent => :destroy, :inverse_of => :rpm
+
     scoped_search :on => :name, :complete_value => true
     scoped_search :on => :version, :complete_value => true
     scoped_search :on => :release, :complete_value => true

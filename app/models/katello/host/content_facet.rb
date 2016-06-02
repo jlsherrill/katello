@@ -14,6 +14,10 @@ module Katello
       has_many :bound_repositories, :through => :content_facet_repositories, :class_name => "Katello::Repository", :source => :repository
       has_many :content_facet_repositories, :class_name => "Katello::ContentFacetRepository", :dependent => :destroy, :inverse_of => :content_facet
 
+      has_many :applicable_rpms, :through => :content_facet_applicable_rpms, :class_name => "Katello::Rpm", :source => :rpm
+      has_many :content_facet_applicable_rpms, :class_name => "Katello::ContentFacetApplicableRpm", :dependent => :destroy, :inverse_of => :content_facet
+
+
       validates :content_view, :presence => true, :allow_blank => false
       validates :lifecycle_environment, :presence => true, :allow_blank => false
       validates :host, :presence => true, :allow_blank => false
