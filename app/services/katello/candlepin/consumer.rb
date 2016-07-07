@@ -120,6 +120,13 @@ module Katello
         end
       end
 
+      def properly_registered?
+        consumer_attributes
+        true
+      rescue RestClient::Gone
+        false
+      end
+
       def self.distribution_to_puppet_os(name)
         return ::Operatingsystem::REDHAT_ATOMIC_HOST_OS if name == ::Operatingsystem::REDHAT_ATOMIC_HOST_DISTRO_NAME
 

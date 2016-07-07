@@ -18,8 +18,12 @@ module Actions
           end
 
           if host.content_host
-            pool_ids = host.content_host.pools.map { |p| p["id"] }
-            plan_self(:pool_ids => pool_ids)
+            begin
+              pool_ids = host.content_host.pools.map { |p| p["id"] }
+              plan_self(:pool_ids => pool_ids)
+            rescue RestClient::Gone
+
+            end
             host.content_host.destroy!
           end
 

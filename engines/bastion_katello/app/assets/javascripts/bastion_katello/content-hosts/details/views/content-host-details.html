@@ -8,6 +8,10 @@
 <section class="nutupane-details" ng-cloak bst-container-scroll>
   <div ng-show="panel.error" bst-alerts success-messages="successMessages" error-messages="errorMessages"></div>
 
+  <div bst-alert="danger" ng-show="host.subscription_facet_attributes.uuid && !host.subscription_facet_attributes.properly_registered">
+    This host is missing part of its registration information, re-registering this host with subscription-manager should resolve this issue.
+  </div>
+
   <div ng-hide="panel.error">
     <header class="details-header">
       <h2 class="fl" translate>Content Host {{ host.name }}</h2>
