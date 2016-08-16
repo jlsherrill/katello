@@ -56,7 +56,7 @@ module Katello
     end
 
     def nvrea
-      Util::Package.build_nvrea(self.as_json.with_indifferent_access, false)
+      Util::Package.build_nvrea(self.as_js.with_indifferent_access, false)
     end
 
     def nvra
