@@ -8,17 +8,13 @@ module Actions
           clone = find_or_build_environment_clone(repository, environment)
 
           sequence do
-            if clone.new_record?
-              plan_action(Repository::Create, clone, true, false)
-            else
-              plan_action(Repository::Clear, clone)
+            unless clone.new_record?
+              plan_action(Actions::Pulp::Repository::Destroy, :pulp_id => clone.pulp_id)
               clone.copy_library_instance_attributes
               clone.save!
-
-              if ::Katello::Repository.needs_distributor_updates([clone]).first
-                plan_action(Pulp::Repository::Refresh, clone)
-              end
             end
+
+            plan_action(Repository::Create, clone, true, false)
 
             if repository.yum?
               plan_action(Repository::CloneYumContent, repository, clone, [], false)
