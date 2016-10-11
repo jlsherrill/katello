@@ -121,6 +121,12 @@ module Actions
             fail pulp_exception
           end
         end
+
+        #save ignored tasks as external_spawned_tasks
+        output[:external_spawned_tasks] = (external_task_data + new_tasks).select do |task|
+          task["task_id"] && (task["tags"] && (task["tags"] & ignored_tags).present?)
+        end
+        output[:pulp_tasks]
       end
 
       def get_new_tasks(current_list, spawned_task_ids)

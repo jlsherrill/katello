@@ -3,6 +3,7 @@ module Actions
     module Repository
       class Sync < Pulp::AbstractAsyncTask
         include Helpers::Presenter
+        middleware.use Actions::Middleware::KeepCurrentUser
 
         input_format do
           param :pulp_id

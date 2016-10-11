@@ -37,6 +37,8 @@ module Actions
             plan_action(Katello::Foreman::ContentUpdate, repo.environment, repo.content_view, repo)
             plan_action(Katello::Repository::CorrectChecksum, repo)
             concurrence do
+              plan_action(Katello::Repository::InitiateDownloadTask, :repo_id => repo.id, :tasks => output[:external_spawned_tasks])
+              plan_action(Katello::Repository::UpdateMedia, :repo_id => repo.id, :contents_changed => contents_changed)
               plan_action(Katello::Repository::ErrataMail, repo, nil, contents_changed)
               plan_self(:id => repo.id, :sync_result => output, :user_id => ::User.current.id, :contents_changed => contents_changed)
               plan_action(Pulp::Repository::RegenerateApplicability, :pulp_id => repo.pulp_id, :contents_changed => contents_changed)
