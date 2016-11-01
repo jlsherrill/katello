@@ -5,9 +5,19 @@ class HostsAndHostGroupsHelperTestBase < ActionView::TestCase
   include ::Katello::HostsAndHostgroupsHelper
   include ApplicationHelper
   attr_accessor :params
+end
+
+class HostAndHostGroupsHelperLifecycleEnvironmentTests < HostsAndHostGroupsHelperTestBase
   def setup
-    self.params = {}
+    @library = katello_environments(:library)
   end
+
+  def test_accessible_lifecycle_environments
+
+    accessible_lifecycle_environments(@library.organization)
+
+  end
+
 end
 
 class HostsAndHostGroupsHelperKickstartRepositoryOptionsTest < HostsAndHostGroupsHelperTestBase
