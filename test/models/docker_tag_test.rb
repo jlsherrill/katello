@@ -21,7 +21,7 @@ module Katello
     end
 
     def test_with_uuid
-      tag = DockerTag.with_uuid(@tag.id).first
+      tag = DockerTag.with_uuid(@tag.uuid).first
       refute_nil tag
       assert_equal @tag.id, tag.id
     end
