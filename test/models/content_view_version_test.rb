@@ -107,6 +107,9 @@ module Katello
 
     def test_search_equal_version
       assert_includes ContentViewVersion.search_for("version = 1.0"), @cvv
+      ENV['byebug'] = 'true'
+      assert_includes ContentViewVersion.search_for("1"), @cvv
+      assert_includes ContentViewVersion.search_for("1.0"), @cvv
       query = ContentViewVersion.search_for("version = 1")
       assert [@cvv, @cvv_minor] & query == [@cvv, @cvv_minor]
     end

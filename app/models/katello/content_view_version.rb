@@ -46,21 +46,24 @@ module Katello
     end
 
     scoped_search :on => :content_view_id, :only_explicit => true
-    scoped_search :on => :major, :rename => :version, :complete_value => true, :ext_method => :find_by_version
-    scoped_search :in => :repositories, :on => :name, :rename => :repository, :complete_value => true
+    scoped_search :in => :repositories, :on => :name, :rename => :repository, :complete_value => true, :only_explicit => true
+    scoped_search :rename => :version, :complete_value => true, :ext_method => :find_by_version
 
     def self.find_by_version(_key, operator, value)
+      byebug if  ENV['byebug']
       conditions = ""
+      major_col = "#{self.table_name}.major"
+      minor_col = "#{self.table_name}.minor"
       if ['>', '<', '=', '<=', '>=', "<>", "!=", 'IN', 'NOT IN'].include?(operator) && value.to_f >= 0
         major, minor = value.split(".")
         case
         when /[<>]/ =~ operator
           minor ||= 0
-          query = where("major #{operator} :major OR (major = :major AND minor #{operator} :minor)", :major => major, :minor => minor)
+          query = where("#{major_col} #{operator} :major OR (#{major_col} = :major AND #{minor_col} #{operator} :minor)", :major => major, :minor => minor)
         when minor.nil?
-          query = where("major #{operator} (:major)", :major => major)
+          query = where("#{major_col} #{operator} (:major)", :major => major)
         else
-          query = where("major #{operator} (:major) and minor #{operator} (:minor)", :major => major, :minor => minor)
+          query = where("#{major_col} #{operator} (:major) and #{minor_col} #{operator} (:minor)", :major => major, :minor => minor)
         end
         _, conditions = query.to_sql.split("WHERE")
       end
