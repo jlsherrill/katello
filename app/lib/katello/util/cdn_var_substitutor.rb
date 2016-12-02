@@ -63,27 +63,52 @@ module Katello
         paths_with_vars = { {} => prefix_with_vars}
         prefixes_without_vars = @substitutions[prefix_with_vars]
 
-        unless prefixes_without_vars
+        until paths_with_vars.empty?
           prefixes_without_vars = {}
-          until paths_with_vars.empty?
-            substitutions, path = paths_with_vars.shift
 
-            if substituable? path
-              for_each_substitute_of_next_var substitutions, path do |new_substitution, new_path|
-                begin
-                  paths_with_vars[new_substitution] = new_path
-                rescue Errors::SecurityViolation
-                  # Some paths may not be accessible
-                  @resource.log :warn, "#{new_path} is not accessible, ignoring"
-                end
-              end
-            else
-              prefixes_without_vars[substitutions] = path
-            end
+          substitutable = paths_with_vars.select { |_subs, path| substituable?(path) }
+          non_substituatable = paths_with_vars.select { |_subs, path| !substituable?(path) }
+
+          non_substituatable.each do |substitutions, path|
+            prefixes_without_vars[substitutions] = path
           end
+
+          paths_with_vars = one_level_of_subs(substitutable)
+
           @substitutions[prefix_with_vars] = prefixes_without_vars
         end
-        return prefixes_without_vars
+        prefixes_without_vars
+      end
+
+      def one_level_of_subs(paths_with_vars)
+        next_level = {}
+        threads = paths_with_vars.map do |substitutions, path|
+          Thread.new do
+            values = []
+            for_each_substitute_of_next_var(substitutions, path) do |new_substitution, new_path|
+              begin
+                Rails.logger.warn(new_path)
+                values << [new_substitution, new_path]
+              rescue Errors::SecurityViolation
+                # Some paths may not be accessible
+                Rails.logger.warn("#{new_path} is not accessible, ignoring")
+              end
+            end
+            values
+          end
+        end
+
+        threads.each do |thread|
+          begin
+            thread.join
+            thread.value.each { |tuple| next_level[tuple[0]] = tuple[1] }
+          rescue StandardError => e
+            Rails.logger.error("Error Recieved: #{e.to_s}")
+            Rails.logger.error("Error Recieved: #{e.backtrace.join("\n")}")
+          end
+        end
+
+        next_level
       end
 
       def substituable?(path)
