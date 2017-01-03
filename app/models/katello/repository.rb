@@ -1,7 +1,14 @@
 module Katello
   # rubocop:disable Metrics/ClassLength
   class Repository < Katello::Model
-    self.include_root_in_json = false
+    YUM_TYPE = 'yum'.freeze
+    FILE_TYPE = 'file'.freeze
+    PUPPET_TYPE = 'puppet'.freeze
+    DOCKER_TYPE = 'docker'.freeze
+    OSTREE_TYPE = 'ostree'.freeze
+
+    CHECKSUM_TYPES = %w(sha1 sha256).freeze
+    SUBSCRIBABLE_TYPES = [YUM_TYPE, OSTREE_TYPE].freeze
 
     validates_lengths_from_database :except => [:label]
     before_destroy :assert_deletable
@@ -17,19 +24,12 @@ module Katello
     include Ext::LabelFromName
     include Katello::Engine.routes.url_helpers
 
-    YUM_TYPE = 'yum'.freeze
-    FILE_TYPE = 'file'.freeze
-    PUPPET_TYPE = 'puppet'.freeze
-    DOCKER_TYPE = 'docker'.freeze
-    OSTREE_TYPE = 'ostree'.freeze
-
-    CHECKSUM_TYPES = %w(sha1 sha256).freeze
-    SUBSCRIBABLE_TYPES = [YUM_TYPE, OSTREE_TYPE].freeze
-
     belongs_to :environment, :inverse_of => :repositories, :class_name => "Katello::KTEnvironment"
     belongs_to :product, :inverse_of => :repositories
     belongs_to :gpg_key, :inverse_of => :repositories
     belongs_to :library_instance, :class_name => "Katello::Repository", :inverse_of => :library_instances_inverse
+    belongs_to :http_proxy, :class_name => "ForemanHttpProxies::HttpProxy", :inverse_of => :repositories
+
     has_many :library_instances_inverse, # TODO: what is the proper name?
              :class_name  => 'Katello::Repository',
              :dependent   => :restrict_with_exception,

@@ -4,6 +4,14 @@ module Katello
     # rubocop:disable MethodLength
     # rubocop:disable ModuleLength
     # rubocop:disable Metrics/AbcSize
+    IMPORTER_CLASSES = {
+        Repository::YUM_TYPE => Runcible::Models::YumImporter,
+        Repository::FILE_TYPE => Runcible::Models::IsoImporter,
+        Repository::PUPPET_TYPE => Runcible::Models::PuppetImporter,
+        Repository::DOCKER_TYPE => Runcible::Models::DockerImporter,
+        Repository::OSTREE_TYPE => Runcible::Models::OstreeImporter
+    }.freeze
+
     def self.included(base)
       base.send :include, LazyAccessor
       base.send :include, InstanceMethods
@@ -151,25 +159,29 @@ module Katello
       end
 
       def generate_importer(capsule = nil)
+        importer_class = Repository::IMPORTER_CLASSES[self.content_type]
+        config = type_specific_importer_config(capsule)
+        config.merge!(importer_ssl_options(capsule))
+        config.merge!(importer_proxy_options(capsule))
+        importer_class.new(config)
+      end
+
+      def type_specific_importer_config(capsule = nil)
         case self.content_type
         when Repository::YUM_TYPE
-          Runcible::Models::YumImporter.new(yum_importer_values(capsule))
+          yum_importer_values(capsule)
         when Repository::FILE_TYPE
-          Runcible::Models::IsoImporter.new(importer_ssl_options(capsule).merge(:feed => importer_feed_url(capsule)))
+          {:feed => importer_feed_url(capsule)}
         when Repository::PUPPET_TYPE
-          options = {:feed => importer_feed_url(capsule)}
-          Runcible::Models::PuppetImporter.new(importer_ssl_options(capsule).merge(options))
+          {:feed => importer_feed_url(capsule)}
         when Repository::DOCKER_TYPE
           options = {}
           options[:upstream_name] = capsule ? self.pulp_id : self.docker_upstream_name
           options[:feed] = docker_feed_url(capsule)
           options[:enable_v1] = false
-          Runcible::Models::DockerImporter.new(importer_ssl_options(capsule).merge(options))
+          options
         when Repository::OSTREE_TYPE
-          options = importer_ssl_options(capsule)
-
-          options[:feed] = self.importer_feed_url(capsule)
-          Runcible::Models::OstreeImporter.new(options)
+          {:feed => self.importer_feed_url}
         else
           fail _("Unexpected repo type %s") % self.content_type
         end
@@ -199,12 +211,22 @@ module Katello
           new_download_policy = self.download_policy
         end
 
-        config = {
+        {
           :feed => self.importer_feed_url(capsule),
           :download_policy => new_download_policy,
           :remove_missing => capsule ? true : self.mirror_on_sync?
         }
-        config.merge(importer_ssl_options(capsule))
+      end
+
+      def importer_proxy_options(capsule = nil)
+        if (capsule.nil? || capsule.default?) && self.http_proxy
+          {
+              :proxy_host => self.http_proxy.url,
+              :proxy_port => self.http_proxy.port,
+              :proxy_username => self.http_proxy.username,
+              :proxy_password => self.http_proxy.password
+          }
+        end
       end
 
       def importer_ssl_options(capsule = nil)
@@ -373,7 +395,7 @@ module Katello
       end
 
       def pulp_update_needed?
-        changeable_attributes = %w(url unprotected checksum_type docker_upstream_name download_policy mirror_on_sync verify_ssl_on_sync)
+        changeable_attributes = %w(url unprotected checksum_type docker_upstream_name download_policy mirror_on_sync verify_ssl_on_sync sync_plan_id)
         changeable_attributes << "name" if docker?
         changeable_attributes.any? { |key| previous_changes.key?(key) }
       end

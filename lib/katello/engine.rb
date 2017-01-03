@@ -177,6 +177,7 @@ module Katello
       ::Setting.send :include, Katello::Concerns::SettingExtensions
       ::Container.send :include, Katello::Concerns::ContainerExtensions
       ::DockerContainerWizardState.send :include, Katello::Concerns::DockerContainerWizardStateExtensions
+      ::ForemanHttpProxies::HttpProxy.send :include, Katello::Concerns::HttpProxyExtensions
 
       #Controller extensions
       ::HostsController.send :include, Katello::Concerns::HostsControllerExtensions

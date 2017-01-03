@@ -25,6 +25,7 @@ module Katello
       param :label, String, :required => false
       param :product_id, :number, :required => true, :desc => N_("Product the repository belongs to")
       param :url, String, :desc => N_("repository source url")
+      param :http_proxy_id, :number, :desc => N_("id of the http proxy to use for syncing")
       param :gpg_key_id, :number, :desc => N_("id of the gpg key that will be assigned to the new repository")
       param :unprotected, :bool, :desc => N_("true if this repository can be published via HTTP")
       param :content_type, RepositoryTypeManager.creatable_repository_types.keys, :required => true, :desc => N_("type of repo (either 'yum', 'puppet', 'docker', or 'ostree')")
@@ -389,7 +390,7 @@ module Katello
     end
 
     def repository_params
-      keys = [:download_policy, :mirror_on_sync, :verify_ssl_on_sync, :upstream_password, :upstream_username]
+      keys = [:download_policy, :mirror_on_sync, :verify_ssl_on_sync, :upstream_password, :upstream_username, :http_proxy_id]
       keys += [:label, :content_type] if params[:action] == "create"
       if params[:action] == 'create' || @repository.custom?
         keys += [:url, :gpg_key_id, :unprotected, :name, :checksum_type, :docker_upstream_name]
