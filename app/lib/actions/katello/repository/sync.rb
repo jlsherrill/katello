@@ -18,6 +18,10 @@ module Actions
         # @param source_url optional url to override source URL with
         def plan(repo, pulp_sync_task_id = nil, source_url = nil, incremental = false, sync_options = {})
           action_subject(repo)
+          verify_content = sync_options.delete(:verify)
+          if verify_content
+            sync_options['download_policy'] = ::Runcible::Models::YumImporter::DOWNLOAD_ON_DEMAND
+          end
 
           if repo.url.blank? && source_url.blank?
             fail _("Unable to sync repo. This repository does not have a feed url.")
@@ -37,6 +41,7 @@ module Actions
             plan_action(Katello::Foreman::ContentUpdate, repo.environment, repo.content_view, repo)
             plan_action(Katello::Repository::CorrectChecksum, repo)
             concurrence do
+              plan_action(Pulp::Repository::Download, :pulp_id => repo.pulp_id, :options => {:verify_all_units => true}) if verify_content
               plan_action(Katello::Repository::ErrataMail, repo, nil, contents_changed)
               plan_self(:id => repo.id, :sync_result => output, :user_id => ::User.current.id, :contents_changed => contents_changed)
               plan_action(Pulp::Repository::RegenerateApplicability, :pulp_id => repo.pulp_id, :contents_changed => contents_changed)

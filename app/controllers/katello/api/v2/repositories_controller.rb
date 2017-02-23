@@ -184,7 +184,8 @@ module Katello
     param :force_full, :bool, :desc => N_("Force sync even if no upstream changes are detected. Only used with yum repositories."), :required => false
     def sync
       sync_options = {
-        :force_full => ::Foreman::Cast.to_bool(params[:force_full])
+        :force_full => ::Foreman::Cast.to_bool(params[:force_full]),
+        :verify => true
       }
 
       if params[:source_url].present? && params[:source_url] !~ /\A#{URI.regexp}\z/
