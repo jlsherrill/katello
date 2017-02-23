@@ -16,7 +16,7 @@ module Actions
         # @param pulp_sync_task_id in case the sync was triggered outside
         #   of Katello and we just need to finish the rest of the orchestration
         # @param source_url optional url to override source URL with
-        def plan(repo, pulp_sync_task_id = nil, source_url = nil, incremental = false)
+        def plan(repo, pulp_sync_task_id = nil, source_url = nil, incremental = false, sync_options = {})
           action_subject(repo)
 
           if repo.url.blank? && source_url.blank?
@@ -24,15 +24,15 @@ module Actions
           end
 
           sequence do
+            sync_options[:remove_missing] = false if incremental
             sync_args = {:pulp_id => repo.pulp_id,
                          :task_id => pulp_sync_task_id,
-                         :source_url => source_url}
-
-            sync_args[:remove_missing] = false if incremental
+                         :source_url => source_url,
+                         :options => sync_options}
 
             output = plan_action(Pulp::Repository::Sync, sync_args).output
 
-            contents_changed = output[:contents_changed]
+            contents_changed = sync_options[:force_full] || output[:contents_changed]
             plan_action(Katello::Repository::IndexContent, :id => repo.id, :contents_changed => contents_changed)
             plan_action(Katello::Foreman::ContentUpdate, repo.environment, repo.content_view, repo)
             plan_action(Katello::Repository::CorrectChecksum, repo)

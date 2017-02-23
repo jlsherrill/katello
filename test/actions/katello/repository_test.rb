@@ -244,7 +244,7 @@ module ::Actions::Katello::Repository
       plan_action action, repository
 
       assert_action_planed_with(action, pulp_action_class,
-                                pulp_id: repository.pulp_id, task_id: nil, source_url: nil)
+                                pulp_id: repository.pulp_id, task_id: nil, source_url: nil, options: {})
       assert_action_planed action, ::Actions::Katello::Repository::IndexContent
       assert_action_planed action, ::Actions::Katello::Repository::ImportApplicability
       assert_action_planed_with action, ::Actions::Katello::Repository::ErrataMail do |repo, _task_id, contents_changed|
@@ -259,7 +259,7 @@ module ::Actions::Katello::Repository
       plan_action action, repository, '123'
 
       assert_action_planed_with(action, pulp_action_class,
-                                pulp_id: repository.pulp_id, task_id: '123', source_url: nil)
+                                pulp_id: repository.pulp_id, task_id: '123', source_url: nil, options: {})
     end
 
     it 'passes the source URL to pulp sync action when provided' do
@@ -269,7 +269,7 @@ module ::Actions::Katello::Repository
 
       assert_action_planed_with(action, pulp_action_class,
                                 pulp_id: repository.pulp_id, task_id: nil,
-                                source_url: 'file:///tmp/')
+                                source_url: 'file:///tmp/', options: {})
     end
 
     describe 'progress' do
