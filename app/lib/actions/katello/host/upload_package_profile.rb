@@ -4,15 +4,23 @@ module Actions
       class UploadPackageProfile < Actions::EntryAction
         middleware.use Actions::Middleware::KeepCurrentUser
 
-        def plan(host, profile)
+        def plan(host, profile_json)
           action_subject host
+
+          plan_self(:host_id => host.id, :profile_json => profile_json, :hostname => host.name)
+          plan_action(GenerateApplicability, [host])
+        end
+
+        def run
+          host = ::Host.find(input[:host_id])
+          profile = JSON.parse(input[:profile_json])
 
           ::Katello::Pulp::Consumer.new(host.content_facet.uuid).upload_package_profile(profile) if host.content_facet.uuid
           simple_packages = profile.map { |item| ::Katello::Pulp::SimplePackage.new(item) }
           host.import_package_profile(simple_packages)
 
-          plan_self(:hostname => host.name)
-          plan_action(GenerateApplicability, [host])
+          #free the huge string from the memory
+          input[:profile_json] = 'TRIMMED'.freeze
         end
 
         def humanized_name
