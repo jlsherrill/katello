@@ -13,10 +13,12 @@ module Actions
         end
 
         def finalize
-          hypervisors = input[:hypervisors]
+          User.as_anonymous_admin do
+            hypervisors = input[:hypervisors]
 
-          if hypervisors
-            hypervisors.each { |hypervisor| update_or_create_hypervisor(hypervisor) }
+            if hypervisors
+              hypervisors.each { |hypervisor| update_or_create_hypervisor(hypervisor) }
+            end
           end
         end
 
