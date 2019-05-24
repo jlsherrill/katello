@@ -7,9 +7,8 @@ module Actions
           param :pulp_id
         end
 
-        def plan(repository, options = {})
-          options[:capsule_id] ||= SmartProxy.default_capsule!.id
-          plan_self(:capsule_id => options[:capsule_id], :pulp_id => repository.pulp_id)
+        def plan(repository, smart_proxy)
+          plan_self(:capsule_id => smart_proxy.id, :pulp_id => repository.pulp_id)
         end
 
         def invoke_external_task
