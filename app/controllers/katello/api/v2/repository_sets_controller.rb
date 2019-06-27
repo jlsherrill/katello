@@ -43,10 +43,8 @@ module Katello
       repos = scan_cdn.output[:results]
 
       repos = repos.select do |repo|
-        if repo[:path].include?('kickstart')
-          variants = ['Server', 'Client', 'ComputeNode', 'Workstation']
-          has_variant = variants.any? { |v| repo[:substitutions][:releasever].try(:include?, v) }
-          has_variant ? repo[:enabled] : true
+        if repo[:path].include?('kickstart') && repo[:substitutions][:releasever].present?
+          repo[:substitutions][:releasever].include?('.') || repo[:enabled]
         else
           true
         end
