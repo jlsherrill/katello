@@ -29,6 +29,7 @@ module ::Actions::Pulp3
       @repo.reload
     end
 
+    skip 'Waiting on ansible syncing to work reliably'
     def test_sync
       sync_args = {:smart_proxy_id => @master.id, :repo_id => @repo.id}
       ForemanTasks.sync_task(::Actions::Pulp3::Orchestration::Repository::Sync, @repo, @master, sync_args)
