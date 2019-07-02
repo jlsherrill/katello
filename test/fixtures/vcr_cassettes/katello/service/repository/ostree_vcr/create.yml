@@ -1,8 +1,55 @@
 ---
 http_interactions:
 - request:
+<<<<<<< HEAD
     method: post
     uri: https://centos7-devel3.samir.example.com/pulp/api/v2/repositories/
+=======
+    method: delete
+    uri: https://centos7-katello-devel.jjeffers.example.com/pulp/api/v2/repositories/100/
+    body:
+      encoding: US-ASCII
+      base64_string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.5p157
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Fri, 12 Jul 2019 19:08:56 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '374'
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      base64_string: |
+        eyJodHRwX3JlcXVlc3RfbWV0aG9kIjogIkRFTEVURSIsICJleGNlcHRpb24i
+        OiBudWxsLCAiZXJyb3JfbWVzc2FnZSI6ICJNaXNzaW5nIHJlc291cmNlKHMp
+        OiByZXBvc2l0b3J5PTEwMCIsICJfaHJlZiI6ICIvcHVscC9hcGkvdjIvcmVw
+        b3NpdG9yaWVzLzEwMC8iLCAiaHR0cF9zdGF0dXMiOiA0MDQsICJlcnJvciI6
+        IHsiY29kZSI6ICJQTFAwMDA5IiwgImRhdGEiOiB7InJlc291cmNlcyI6IHsi
+        cmVwb3NpdG9yeSI6ICIxMDAifX0sICJkZXNjcmlwdGlvbiI6ICJNaXNzaW5n
+        IHJlc291cmNlKHMpOiByZXBvc2l0b3J5PTEwMCIsICJzdWJfZXJyb3JzIjog
+        W119LCAidHJhY2ViYWNrIjogbnVsbCwgInJlc291cmNlcyI6IHsicmVwb3Np
+        dG9yeSI6ICIxMDAifX0=
+    http_version: 
+  recorded_at: Fri, 12 Jul 2019 19:08:56 GMT
+- request:
+    method: post
+    uri: https://centos7-katello-devel.jjeffers.example.com/pulp/api/v2/repositories/
+>>>>>>> 4b732b1... Fixes #27199 - adds http proxy and policy fields
     body:
       encoding: UTF-8
       base64_string: |
@@ -10,6 +57,7 @@ http_interactions:
         X3R5cGVfaWQiOiJvc3RyZWVfd2ViX2ltcG9ydGVyIiwiaW1wb3J0ZXJfY29u
         ZmlnIjp7ImZlZWQiOiJodHRwOi8vY2RuLnFhLnJlZGhhdC5jb20vY29udGVu
         dC9odGIvcmhlbC9zZXJ2ZXIvNy94ODZfNjQvZXh0cmFzL29zdHJlZS8iLCJk
+<<<<<<< HEAD
         ZXB0aCI6MCwic3NsX2NsaWVudF9jZXJ0IjpudWxsLCJzc2xfY2xpZW50X2tl
         eSI6bnVsbCwic3NsX2NhX2NlcnQiOm51bGwsInNzbF92YWxpZGF0aW9uIjp0
         cnVlLCJwcm94eV9ob3N0IjpudWxsLCJiYXNpY19hdXRoX3VzZXJuYW1lIjpu
@@ -19,24 +67,47 @@ http_interactions:
         YnV0b3JfY29uZmlnIjp7InJlbGF0aXZlX3BhdGgiOiJBQ01FX0NvcnBvcmF0
         aW9uL2xpYnJhcnkvb3N0cmVlIiwiZGVwdGgiOjB9LCJhdXRvX3B1Ymxpc2gi
         OnRydWUsImRpc3RyaWJ1dG9yX2lkIjoiMTAwIn1dfQ==
+=======
+        ZXB0aCI6MCwiYmFzaWNfYXV0aF91c2VybmFtZSI6bnVsbCwiYmFzaWNfYXV0
+        aF9wYXNzd29yZCI6bnVsbCwic3NsX3ZhbGlkYXRpb24iOnRydWUsInByb3h5
+        X2hvc3QiOiIiLCJzc2xfY2xpZW50X2NlcnQiOm51bGwsInNzbF9jbGllbnRf
+        a2V5IjpudWxsLCJzc2xfY2FfY2VydCI6bnVsbH0sIm5vdGVzIjp7Il9yZXBv
+        LXR5cGUiOiJPU1RSRUUifSwiZGlzdHJpYnV0b3JzIjpbeyJkaXN0cmlidXRv
+        cl90eXBlX2lkIjoib3N0cmVlX3dlYl9kaXN0cmlidXRvciIsImRpc3RyaWJ1
+        dG9yX2NvbmZpZyI6eyJyZWxhdGl2ZV9wYXRoIjoiL0FDTUVfQ29ycG9yYXRp
+        b24vbGlicmFyeS9vc3RyZWUiLCJkZXB0aCI6MH0sImF1dG9fcHVibGlzaCI6
+        dHJ1ZSwiZGlzdHJpYnV0b3JfaWQiOiIxMDAifV19
+>>>>>>> 4b732b1... Fixes #27199 - adds http proxy and policy fields
     headers:
       Accept:
       - application/json
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
+<<<<<<< HEAD
       - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.3p105
       Content-Type:
       - application/json
       Content-Length:
       - '571'
+=======
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.5p157
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '570'
+>>>>>>> 4b732b1... Fixes #27199 - adds http proxy and policy fields
   response:
     status:
       code: 201
       message: CREATED
     headers:
       Date:
+<<<<<<< HEAD
       - Fri, 19 Jul 2019 14:08:48 GMT
+=======
+      - Fri, 12 Jul 2019 19:08:56 GMT
+>>>>>>> 4b732b1... Fixes #27199 - adds http proxy and policy fields
       Server:
       - Apache
       Content-Length:
@@ -52,6 +123,7 @@ http_interactions:
         ImRlc2NyaXB0aW9uIjogbnVsbCwgImxhc3RfdW5pdF9hZGRlZCI6IG51bGws
         ICJub3RlcyI6IHsiX3JlcG8tdHlwZSI6ICJPU1RSRUUifSwgImxhc3RfdW5p
         dF9yZW1vdmVkIjogbnVsbCwgImNvbnRlbnRfdW5pdF9jb3VudHMiOiB7fSwg
+<<<<<<< HEAD
         Il9ucyI6ICJyZXBvcyIsICJfaWQiOiB7IiRvaWQiOiAiNWQzMWNlZjBmNGU2
         MmIwODc4NGMwZjU1In0sICJpZCI6ICIxMDAiLCAiX2hyZWYiOiAiL3B1bHAv
         YXBpL3YyL3JlcG9zaXRvcmllcy8xMDAvIn0=
@@ -60,6 +132,16 @@ http_interactions:
 - request:
     method: get
     uri: https://centos7-devel3.samir.example.com/pulp/api/v2/repositories/100/?details=true
+=======
+        Il9ucyI6ICJyZXBvcyIsICJfaWQiOiB7IiRvaWQiOiAiNWQyOGRhYzg1ZWFm
+        MGQwNzM3ZDM0Y2Q2In0sICJpZCI6ICIxMDAiLCAiX2hyZWYiOiAiL3B1bHAv
+        YXBpL3YyL3JlcG9zaXRvcmllcy8xMDAvIn0=
+    http_version: 
+  recorded_at: Fri, 12 Jul 2019 19:08:56 GMT
+- request:
+    method: get
+    uri: https://centos7-katello-devel.jjeffers.example.com/pulp/api/v2/repositories/100/?details=true
+>>>>>>> 4b732b1... Fixes #27199 - adds http proxy and policy fields
     body:
       encoding: US-ASCII
       base64_string: ''
@@ -69,7 +151,11 @@ http_interactions:
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
+<<<<<<< HEAD
       - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.3p105
+=======
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.5p157
+>>>>>>> 4b732b1... Fixes #27199 - adds http proxy and policy fields
       Content-Type:
       - application/json
   response:
@@ -78,6 +164,7 @@ http_interactions:
       message: OK
     headers:
       Date:
+<<<<<<< HEAD
       - Fri, 19 Jul 2019 14:08:48 GMT
       Server:
       - Apache
@@ -87,6 +174,17 @@ http_interactions:
       - Accept-Encoding
       Content-Length:
       - '1280'
+=======
+      - Fri, 12 Jul 2019 19:08:56 GMT
+      Server:
+      - Apache
+      Etag:
+      - '"ae9894f5a639280891c7d50d0c1b87de-gzip"'
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1299'
+>>>>>>> 4b732b1... Fixes #27199 - adds http proxy and policy fields
       Content-Type:
       - application/json; charset=utf-8
     body:
@@ -94,12 +192,18 @@ http_interactions:
       base64_string: |
         eyJzY3JhdGNocGFkIjoge30sICJkaXNwbGF5X25hbWUiOiAib3N0cmVlIiwg
         ImRlc2NyaXB0aW9uIjogbnVsbCwgImRpc3RyaWJ1dG9ycyI6IFt7InJlcG9f
+<<<<<<< HEAD
         aWQiOiAiMTAwIiwgImxhc3RfdXBkYXRlZCI6ICIyMDE5LTA3LTE5VDE0OjA4
         OjQ4WiIsICJfaHJlZiI6ICIvcHVscC9hcGkvdjIvcmVwb3NpdG9yaWVzLzEw
+=======
+        aWQiOiAiMTAwIiwgImxhc3RfdXBkYXRlZCI6ICIyMDE5LTA3LTEyVDE5OjA4
+        OjU2WiIsICJfaHJlZiI6ICIvcHVscC9hcGkvdjIvcmVwb3NpdG9yaWVzLzEw
+>>>>>>> 4b732b1... Fixes #27199 - adds http proxy and policy fields
         MC9kaXN0cmlidXRvcnMvMTAwLyIsICJsYXN0X292ZXJyaWRlX2NvbmZpZyI6
         IHt9LCAibGFzdF9wdWJsaXNoIjogbnVsbCwgImRpc3RyaWJ1dG9yX3R5cGVf
         aWQiOiAib3N0cmVlX3dlYl9kaXN0cmlidXRvciIsICJhdXRvX3B1Ymxpc2gi
         OiB0cnVlLCAic2NyYXRjaHBhZCI6IHt9LCAiX25zIjogInJlcG9fZGlzdHJp
+<<<<<<< HEAD
         YnV0b3JzIiwgIl9pZCI6IHsiJG9pZCI6ICI1ZDMxY2VmMGY0ZTYyYjA4Nzg0
         YzBmNTcifSwgImNvbmZpZyI6IHsiZGVwdGgiOiAwLCAicmVsYXRpdmVfcGF0
         aCI6ICJBQ01FX0NvcnBvcmF0aW9uL2xpYnJhcnkvb3N0cmVlIn0sICJpZCI6
@@ -123,4 +227,376 @@ http_interactions:
         L3JlcG9zaXRvcmllcy8xMDAvIn0=
     http_version: 
   recorded_at: Fri, 19 Jul 2019 14:08:48 GMT
+=======
+        YnV0b3JzIiwgIl9pZCI6IHsiJG9pZCI6ICI1ZDI4ZGFjODVlYWYwZDA3Mzdk
+        MzRjZDgifSwgImNvbmZpZyI6IHsiZGVwdGgiOiAwLCAicmVsYXRpdmVfcGF0
+        aCI6ICIvQUNNRV9Db3Jwb3JhdGlvbi9saWJyYXJ5L29zdHJlZSJ9LCAiaWQi
+        OiAiMTAwIn1dLCAibGFzdF91bml0X2FkZGVkIjogbnVsbCwgIm5vdGVzIjog
+        eyJfcmVwby10eXBlIjogIk9TVFJFRSJ9LCAibGFzdF91bml0X3JlbW92ZWQi
+        OiBudWxsLCAiY29udGVudF91bml0X2NvdW50cyI6IHt9LCAiX25zIjogInJl
+        cG9zIiwgImltcG9ydGVycyI6IFt7InJlcG9faWQiOiAiMTAwIiwgImxhc3Rf
+        dXBkYXRlZCI6ICIyMDE5LTA3LTEyVDE5OjA4OjU2WiIsICJfaHJlZiI6ICIv
+        cHVscC9hcGkvdjIvcmVwb3NpdG9yaWVzLzEwMC9pbXBvcnRlcnMvb3N0cmVl
+        X3dlYl9pbXBvcnRlci8iLCAiX25zIjogInJlcG9faW1wb3J0ZXJzIiwgImlt
+        cG9ydGVyX3R5cGVfaWQiOiAib3N0cmVlX3dlYl9pbXBvcnRlciIsICJsYXN0
+        X292ZXJyaWRlX2NvbmZpZyI6IHt9LCAibGFzdF9zeW5jIjogbnVsbCwgInNj
+        cmF0Y2hwYWQiOiBudWxsLCAiX2lkIjogeyIkb2lkIjogIjVkMjhkYWM4NWVh
+        ZjBkMDczN2QzNGNkNyJ9LCAiY29uZmlnIjogeyJmZWVkIjogImh0dHA6Ly9j
+        ZG4ucWEucmVkaGF0LmNvbS9jb250ZW50L2h0Yi9yaGVsL3NlcnZlci83L3g4
+        Nl82NC9leHRyYXMvb3N0cmVlLyIsICJzc2xfdmFsaWRhdGlvbiI6IHRydWUs
+        ICJkZXB0aCI6IDAsICJwcm94eV9ob3N0IjogIiJ9LCAiaWQiOiAib3N0cmVl
+        X3dlYl9pbXBvcnRlciJ9XSwgImxvY2FsbHlfc3RvcmVkX3VuaXRzIjogMCwg
+        Il9pZCI6IHsiJG9pZCI6ICI1ZDI4ZGFjODVlYWYwZDA3MzdkMzRjZDYifSwg
+        InRvdGFsX3JlcG9zaXRvcnlfdW5pdHMiOiAwLCAiaWQiOiAiMTAwIiwgIl9o
+        cmVmIjogIi9wdWxwL2FwaS92Mi9yZXBvc2l0b3JpZXMvMTAwLyJ9
+    http_version: 
+  recorded_at: Fri, 12 Jul 2019 19:08:56 GMT
+- request:
+    method: delete
+    uri: https://centos7-katello-devel.jjeffers.example.com/pulp/api/v2/repositories/100/
+    body:
+      encoding: US-ASCII
+      base64_string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.5p157
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Date:
+      - Fri, 12 Jul 2019 19:08:56 GMT
+      Server:
+      - Apache
+      Content-Length:
+      - '172'
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      base64_string: |
+        eyJzcGF3bmVkX3Rhc2tzIjogW3siX2hyZWYiOiAiL3B1bHAvYXBpL3YyL3Rh
+        c2tzLzhmODgwN2JmLTE2MmItNDk4MC1iOThmLTdlMDY0YzlmZDdhYi8iLCAi
+        dGFza19pZCI6ICI4Zjg4MDdiZi0xNjJiLTQ5ODAtYjk4Zi03ZTA2NGM5ZmQ3
+        YWIifV0sICJyZXN1bHQiOiBudWxsLCAiZXJyb3IiOiBudWxsfQ==
+    http_version: 
+  recorded_at: Fri, 12 Jul 2019 19:08:56 GMT
+- request:
+    method: get
+    uri: https://centos7-katello-devel.jjeffers.example.com/pulp/api/v2/tasks/8f8807bf-162b-4980-b98f-7e064c9fd7ab/
+    body:
+      encoding: US-ASCII
+      base64_string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.5p157
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jul 2019 19:08:56 GMT
+      Server:
+      - Apache
+      Etag:
+      - '"1d650b2440ae6b911b4ff859022018eb-gzip"'
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '536'
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      base64_string: |
+        eyJleGNlcHRpb24iOiBudWxsLCAidGFza190eXBlIjogInB1bHAuc2VydmVy
+        LnRhc2tzLnJlcG9zaXRvcnkuZGVsZXRlIiwgIl9ocmVmIjogIi9wdWxwL2Fw
+        aS92Mi90YXNrcy84Zjg4MDdiZi0xNjJiLTQ5ODAtYjk4Zi03ZTA2NGM5ZmQ3
+        YWIvIiwgInRhc2tfaWQiOiAiOGY4ODA3YmYtMTYyYi00OTgwLWI5OGYtN2Uw
+        NjRjOWZkN2FiIiwgInRhZ3MiOiBbInB1bHA6cmVwb3NpdG9yeToxMDAiLCAi
+        cHVscDphY3Rpb246ZGVsZXRlIl0sICJmaW5pc2hfdGltZSI6IG51bGwsICJf
+        bnMiOiAidGFza19zdGF0dXMiLCAic3RhcnRfdGltZSI6IG51bGwsICJ0cmFj
+        ZWJhY2siOiBudWxsLCAic3Bhd25lZF90YXNrcyI6IFtdLCAicHJvZ3Jlc3Nf
+        cmVwb3J0Ijoge30sICJxdWV1ZSI6ICIiLCAic3RhdGUiOiAid2FpdGluZyIs
+        ICJ3b3JrZXJfbmFtZSI6IG51bGwsICJyZXN1bHQiOiBudWxsLCAiZXJyb3Ii
+        OiBudWxsLCAiX2lkIjogeyIkb2lkIjogIjVkMjhkYWM4MTY0M2E0Y2ZmMzU4
+        ZGM1YiJ9LCAiaWQiOiAiNWQyOGRhYzgxNjQzYTRjZmYzNThkYzViIn0=
+    http_version: 
+  recorded_at: Fri, 12 Jul 2019 19:08:56 GMT
+- request:
+    method: get
+    uri: https://centos7-katello-devel.jjeffers.example.com/pulp/api/v2/tasks/8f8807bf-162b-4980-b98f-7e064c9fd7ab/
+    body:
+      encoding: US-ASCII
+      base64_string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.5p157
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jul 2019 19:08:56 GMT
+      Server:
+      - Apache
+      Etag:
+      - '"1d650b2440ae6b911b4ff859022018eb-gzip"'
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '536'
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      base64_string: |
+        eyJleGNlcHRpb24iOiBudWxsLCAidGFza190eXBlIjogInB1bHAuc2VydmVy
+        LnRhc2tzLnJlcG9zaXRvcnkuZGVsZXRlIiwgIl9ocmVmIjogIi9wdWxwL2Fw
+        aS92Mi90YXNrcy84Zjg4MDdiZi0xNjJiLTQ5ODAtYjk4Zi03ZTA2NGM5ZmQ3
+        YWIvIiwgInRhc2tfaWQiOiAiOGY4ODA3YmYtMTYyYi00OTgwLWI5OGYtN2Uw
+        NjRjOWZkN2FiIiwgInRhZ3MiOiBbInB1bHA6cmVwb3NpdG9yeToxMDAiLCAi
+        cHVscDphY3Rpb246ZGVsZXRlIl0sICJmaW5pc2hfdGltZSI6IG51bGwsICJf
+        bnMiOiAidGFza19zdGF0dXMiLCAic3RhcnRfdGltZSI6IG51bGwsICJ0cmFj
+        ZWJhY2siOiBudWxsLCAic3Bhd25lZF90YXNrcyI6IFtdLCAicHJvZ3Jlc3Nf
+        cmVwb3J0Ijoge30sICJxdWV1ZSI6ICIiLCAic3RhdGUiOiAid2FpdGluZyIs
+        ICJ3b3JrZXJfbmFtZSI6IG51bGwsICJyZXN1bHQiOiBudWxsLCAiZXJyb3Ii
+        OiBudWxsLCAiX2lkIjogeyIkb2lkIjogIjVkMjhkYWM4MTY0M2E0Y2ZmMzU4
+        ZGM1YiJ9LCAiaWQiOiAiNWQyOGRhYzgxNjQzYTRjZmYzNThkYzViIn0=
+    http_version: 
+  recorded_at: Fri, 12 Jul 2019 19:08:56 GMT
+- request:
+    method: get
+    uri: https://centos7-katello-devel.jjeffers.example.com/pulp/api/v2/tasks/8f8807bf-162b-4980-b98f-7e064c9fd7ab/
+    body:
+      encoding: US-ASCII
+      base64_string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.5p157
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jul 2019 19:08:56 GMT
+      Server:
+      - Apache
+      Etag:
+      - '"2155623e1ebcf5551ffffdbb45d0c5b8-gzip"'
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '694'
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      base64_string: |
+        eyJleGNlcHRpb24iOiBudWxsLCAidGFza190eXBlIjogInB1bHAuc2VydmVy
+        LnRhc2tzLnJlcG9zaXRvcnkuZGVsZXRlIiwgIl9ocmVmIjogIi9wdWxwL2Fw
+        aS92Mi90YXNrcy84Zjg4MDdiZi0xNjJiLTQ5ODAtYjk4Zi03ZTA2NGM5ZmQ3
+        YWIvIiwgInRhc2tfaWQiOiAiOGY4ODA3YmYtMTYyYi00OTgwLWI5OGYtN2Uw
+        NjRjOWZkN2FiIiwgInRhZ3MiOiBbInB1bHA6cmVwb3NpdG9yeToxMDAiLCAi
+        cHVscDphY3Rpb246ZGVsZXRlIl0sICJmaW5pc2hfdGltZSI6IG51bGwsICJf
+        bnMiOiAidGFza19zdGF0dXMiLCAic3RhcnRfdGltZSI6ICIyMDE5LTA3LTEy
+        VDE5OjA4OjU2WiIsICJ0cmFjZWJhY2siOiBudWxsLCAic3Bhd25lZF90YXNr
+        cyI6IFtdLCAicHJvZ3Jlc3NfcmVwb3J0Ijoge30sICJxdWV1ZSI6ICJyZXNl
+        cnZlZF9yZXNvdXJjZV93b3JrZXItMUBjZW50b3M3LWthdGVsbG8tZGV2ZWwu
+        amplZmZlcnMuZXhhbXBsZS5jb20uZHEyIiwgInN0YXRlIjogInJ1bm5pbmci
+        LCAid29ya2VyX25hbWUiOiAicmVzZXJ2ZWRfcmVzb3VyY2Vfd29ya2VyLTFA
+        Y2VudG9zNy1rYXRlbGxvLWRldmVsLmpqZWZmZXJzLmV4YW1wbGUuY29tIiwg
+        InJlc3VsdCI6IG51bGwsICJlcnJvciI6IG51bGwsICJfaWQiOiB7IiRvaWQi
+        OiAiNWQyOGRhYzgxNjQzYTRjZmYzNThkYzViIn0sICJpZCI6ICI1ZDI4ZGFj
+        ODE2NDNhNGNmZjM1OGRjNWIifQ==
+    http_version: 
+  recorded_at: Fri, 12 Jul 2019 19:08:56 GMT
+- request:
+    method: get
+    uri: https://centos7-katello-devel.jjeffers.example.com/pulp/api/v2/tasks/8f8807bf-162b-4980-b98f-7e064c9fd7ab/
+    body:
+      encoding: US-ASCII
+      base64_string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.5p157
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jul 2019 19:08:57 GMT
+      Server:
+      - Apache
+      Etag:
+      - '"2155623e1ebcf5551ffffdbb45d0c5b8-gzip"'
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '694'
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      base64_string: |
+        eyJleGNlcHRpb24iOiBudWxsLCAidGFza190eXBlIjogInB1bHAuc2VydmVy
+        LnRhc2tzLnJlcG9zaXRvcnkuZGVsZXRlIiwgIl9ocmVmIjogIi9wdWxwL2Fw
+        aS92Mi90YXNrcy84Zjg4MDdiZi0xNjJiLTQ5ODAtYjk4Zi03ZTA2NGM5ZmQ3
+        YWIvIiwgInRhc2tfaWQiOiAiOGY4ODA3YmYtMTYyYi00OTgwLWI5OGYtN2Uw
+        NjRjOWZkN2FiIiwgInRhZ3MiOiBbInB1bHA6cmVwb3NpdG9yeToxMDAiLCAi
+        cHVscDphY3Rpb246ZGVsZXRlIl0sICJmaW5pc2hfdGltZSI6IG51bGwsICJf
+        bnMiOiAidGFza19zdGF0dXMiLCAic3RhcnRfdGltZSI6ICIyMDE5LTA3LTEy
+        VDE5OjA4OjU2WiIsICJ0cmFjZWJhY2siOiBudWxsLCAic3Bhd25lZF90YXNr
+        cyI6IFtdLCAicHJvZ3Jlc3NfcmVwb3J0Ijoge30sICJxdWV1ZSI6ICJyZXNl
+        cnZlZF9yZXNvdXJjZV93b3JrZXItMUBjZW50b3M3LWthdGVsbG8tZGV2ZWwu
+        amplZmZlcnMuZXhhbXBsZS5jb20uZHEyIiwgInN0YXRlIjogInJ1bm5pbmci
+        LCAid29ya2VyX25hbWUiOiAicmVzZXJ2ZWRfcmVzb3VyY2Vfd29ya2VyLTFA
+        Y2VudG9zNy1rYXRlbGxvLWRldmVsLmpqZWZmZXJzLmV4YW1wbGUuY29tIiwg
+        InJlc3VsdCI6IG51bGwsICJlcnJvciI6IG51bGwsICJfaWQiOiB7IiRvaWQi
+        OiAiNWQyOGRhYzgxNjQzYTRjZmYzNThkYzViIn0sICJpZCI6ICI1ZDI4ZGFj
+        ODE2NDNhNGNmZjM1OGRjNWIifQ==
+    http_version: 
+  recorded_at: Fri, 12 Jul 2019 19:08:57 GMT
+- request:
+    method: get
+    uri: https://centos7-katello-devel.jjeffers.example.com/pulp/api/v2/tasks/8f8807bf-162b-4980-b98f-7e064c9fd7ab/
+    body:
+      encoding: US-ASCII
+      base64_string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.5p157
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jul 2019 19:08:57 GMT
+      Server:
+      - Apache
+      Etag:
+      - '"2155623e1ebcf5551ffffdbb45d0c5b8-gzip"'
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '694'
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      base64_string: |
+        eyJleGNlcHRpb24iOiBudWxsLCAidGFza190eXBlIjogInB1bHAuc2VydmVy
+        LnRhc2tzLnJlcG9zaXRvcnkuZGVsZXRlIiwgIl9ocmVmIjogIi9wdWxwL2Fw
+        aS92Mi90YXNrcy84Zjg4MDdiZi0xNjJiLTQ5ODAtYjk4Zi03ZTA2NGM5ZmQ3
+        YWIvIiwgInRhc2tfaWQiOiAiOGY4ODA3YmYtMTYyYi00OTgwLWI5OGYtN2Uw
+        NjRjOWZkN2FiIiwgInRhZ3MiOiBbInB1bHA6cmVwb3NpdG9yeToxMDAiLCAi
+        cHVscDphY3Rpb246ZGVsZXRlIl0sICJmaW5pc2hfdGltZSI6IG51bGwsICJf
+        bnMiOiAidGFza19zdGF0dXMiLCAic3RhcnRfdGltZSI6ICIyMDE5LTA3LTEy
+        VDE5OjA4OjU2WiIsICJ0cmFjZWJhY2siOiBudWxsLCAic3Bhd25lZF90YXNr
+        cyI6IFtdLCAicHJvZ3Jlc3NfcmVwb3J0Ijoge30sICJxdWV1ZSI6ICJyZXNl
+        cnZlZF9yZXNvdXJjZV93b3JrZXItMUBjZW50b3M3LWthdGVsbG8tZGV2ZWwu
+        amplZmZlcnMuZXhhbXBsZS5jb20uZHEyIiwgInN0YXRlIjogInJ1bm5pbmci
+        LCAid29ya2VyX25hbWUiOiAicmVzZXJ2ZWRfcmVzb3VyY2Vfd29ya2VyLTFA
+        Y2VudG9zNy1rYXRlbGxvLWRldmVsLmpqZWZmZXJzLmV4YW1wbGUuY29tIiwg
+        InJlc3VsdCI6IG51bGwsICJlcnJvciI6IG51bGwsICJfaWQiOiB7IiRvaWQi
+        OiAiNWQyOGRhYzgxNjQzYTRjZmYzNThkYzViIn0sICJpZCI6ICI1ZDI4ZGFj
+        ODE2NDNhNGNmZjM1OGRjNWIifQ==
+    http_version: 
+  recorded_at: Fri, 12 Jul 2019 19:08:57 GMT
+- request:
+    method: get
+    uri: https://centos7-katello-devel.jjeffers.example.com/pulp/api/v2/tasks/8f8807bf-162b-4980-b98f-7e064c9fd7ab/
+    body:
+      encoding: US-ASCII
+      base64_string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.5p157
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jul 2019 19:08:57 GMT
+      Server:
+      - Apache
+      Etag:
+      - '"19f9e30ae2ca3bf5237d8308bb173d98-gzip"'
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '713'
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      base64_string: |
+        eyJleGNlcHRpb24iOiBudWxsLCAidGFza190eXBlIjogInB1bHAuc2VydmVy
+        LnRhc2tzLnJlcG9zaXRvcnkuZGVsZXRlIiwgIl9ocmVmIjogIi9wdWxwL2Fw
+        aS92Mi90YXNrcy84Zjg4MDdiZi0xNjJiLTQ5ODAtYjk4Zi03ZTA2NGM5ZmQ3
+        YWIvIiwgInRhc2tfaWQiOiAiOGY4ODA3YmYtMTYyYi00OTgwLWI5OGYtN2Uw
+        NjRjOWZkN2FiIiwgInRhZ3MiOiBbInB1bHA6cmVwb3NpdG9yeToxMDAiLCAi
+        cHVscDphY3Rpb246ZGVsZXRlIl0sICJmaW5pc2hfdGltZSI6ICIyMDE5LTA3
+        LTEyVDE5OjA4OjU3WiIsICJfbnMiOiAidGFza19zdGF0dXMiLCAic3RhcnRf
+        dGltZSI6ICIyMDE5LTA3LTEyVDE5OjA4OjU2WiIsICJ0cmFjZWJhY2siOiBu
+        dWxsLCAic3Bhd25lZF90YXNrcyI6IFtdLCAicHJvZ3Jlc3NfcmVwb3J0Ijog
+        e30sICJxdWV1ZSI6ICJyZXNlcnZlZF9yZXNvdXJjZV93b3JrZXItMUBjZW50
+        b3M3LWthdGVsbG8tZGV2ZWwuamplZmZlcnMuZXhhbXBsZS5jb20uZHEyIiwg
+        InN0YXRlIjogImZpbmlzaGVkIiwgIndvcmtlcl9uYW1lIjogInJlc2VydmVk
+        X3Jlc291cmNlX3dvcmtlci0xQGNlbnRvczcta2F0ZWxsby1kZXZlbC5qamVm
+        ZmVycy5leGFtcGxlLmNvbSIsICJyZXN1bHQiOiBudWxsLCAiZXJyb3IiOiBu
+        dWxsLCAiX2lkIjogeyIkb2lkIjogIjVkMjhkYWM4MTY0M2E0Y2ZmMzU4ZGM1
+        YiJ9LCAiaWQiOiAiNWQyOGRhYzgxNjQzYTRjZmYzNThkYzViIn0=
+    http_version: 
+  recorded_at: Fri, 12 Jul 2019 19:08:57 GMT
+>>>>>>> 4b732b1... Fixes #27199 - adds http proxy and policy fields
 recorded_with: VCR 3.0.3
