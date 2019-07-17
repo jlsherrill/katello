@@ -1,12 +1,12 @@
 /**
- *  * @ngdoc service
- *   * @name  Katello.http-proxies.factory:HttpProxy
- *    *
- *     * @requires BastionResource
- *      *
- *       * @description
- *        *   Provides a BastionResource for Http Proxies.
- *         */
+ * @ngdoc service
+ * @name  Katello.http-proxies.factory:HttpProxy
+ *
+ * @requires BastionResource
+ *
+ * @description
+ *   Provides a BastionResource for Http Proxies.
+ */
 angular.module("Bastion.http-proxies").factory("HttpProxy", [
     "BastionResource",
     "CurrentOrganization",
