@@ -82,6 +82,7 @@ class TypeAhead extends Component {
                       case KEY_CODES.ENTER_KEY:
                         if (!isOpen || !activeItems[highlightedIndex]) {
                           onSearch(this.state.inputValue);
+                          e.nativeEvent.preventDownshiftDefault = true;
                           e.preventDefault();
                         }
 
