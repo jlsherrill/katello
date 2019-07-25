@@ -239,7 +239,7 @@ module Katello
           ssl_validation: root.verify_ssl_on_sync,
           name: backend_object_name,
           url: root.url,
-          proxy_url: remote_proxy_url
+          proxy_url: root.http_proxy&.full_url
         }
         if root.upstream_username && root.upstream_password
           remote_options.merge(username: root.upstream_username,
@@ -264,22 +264,6 @@ module Katello
         else
           {}
         end
-      end
-
-      def remote_proxy_url
-        if repo.root.http_proxy_policy == RootRepository::NO_DEFAULT_HTTP_PROXY
-          return nil
-        end
-
-        proxy = repo.root.http_proxy
-        if repo.root.http_proxy_policy == RootRepository::GLOBAL_DEFAULT_HTTP_PROXY
-          proxy = HttpProxy.default_global_content_proxy
-        end
-
-        if proxy
-          return proxy.full_url
-        end
-        nil
       end
 
       def lookup_version(href)
