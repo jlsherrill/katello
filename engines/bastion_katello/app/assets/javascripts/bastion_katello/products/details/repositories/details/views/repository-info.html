@@ -133,31 +133,29 @@
       </span>
 
       <span>
-        <dt translate>Http Proxy Policy</dt>
-        <dd bst-edit-custom="displayHttpProxyPolicyName(repository.http_proxy_policy)"
-            readonly="denied('edit_products', product)"
-            on-save="save(repository)"
-            >
-            <select ng-options="type.label as type.name for type in policies" ng-model="repository.http_proxy_policy">
-            </select>
-        </dd>
-      </span>
-
-      <span ng-show="repository.http_proxy_policy === 'use_selected_http_proxy'">
         <dt translate>Http Proxy</dt>
-        <span translate ng-show="proxies.length == 0">
-          No HTTP Proxies found
+        <dd bst-edit-custom
+            readonly="denied('edit_products', product)"
+            on-save"save(repository)">
+            <div translate>HttpProxyPolicy</div>
+            <select
+              ng-options="type.label as type.name for type in policies"
+              ng-model="repository.http_proxy_policy">
+            </select>
+
+        <span ng-show="repository.http_proxy_policy === 'use_selected_http_proxy'">
+          <div translate>Http Proxy</div>
+          <span translate ng-show="proxies.length == 0">
+            No HTTP Proxies found
+          </span>
+          <span ng-show="proxies.length > 0">
+            <select
+              ng-model="repository.http_proxy_id"
+              ng-options="proxy.id as proxy.name for proxy in proxies"
+              ng-show="proxies.length > 0">
+            </select>
+          </span>
         </span>
-        <dd bst-edit-custom="displayHttpProxyName(repository.http_proxy_id)"
-          on-save="save(repository)"
-          ng-show="proxies.length > 0"
-          >
-          <select
-            ng-model="repository.http_proxy_id"
-            ng-options="proxy.id as proxy.name for proxy in proxies"
-            ng-show="proxies.length > 0">
-          </select>
-        </dd>
       </span>
 
       <span ng-if="repository.content_type === 'yum'">
