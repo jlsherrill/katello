@@ -38,7 +38,7 @@ module Katello
             root_repos += RootRepository.with_global_proxy
           end
 
-          repos = root_repos.collect(&:repositories)
+          repos = root_repos.collect(&:library_instance)
           repos.flatten.uniq.each do |repo|
             ForemanTasks.async_task(
               ::Actions::Katello::Repository::UpdateHttpProxyDetails,
