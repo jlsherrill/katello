@@ -40,7 +40,7 @@ angular.module('Bastion.repositories').service('HttpProxyPolicy',
             var foundProxy = proxies.find(findProxy, { id: proxyId });
 
             if (proxies.length === 0) {
-                return "No HTTP Proxies found";
+                return translate("No HTTP Proxies found");
             }
 
             if (foundProxy) {
