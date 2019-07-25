@@ -40,8 +40,8 @@ module Katello
 
           repos = root_repos.collect(&:library_instance)
           ForemenTasks.async_task(
-            ::Actions::BulkAction, 
-            Actions::Katello::Repository::RefreshRepository, 
+            ::Actions::BulkAction,
+            Actions::Katello::Repository::RefreshRepository,
             repos.flatten.uniq.order_by_root(:name));
         end
       end
