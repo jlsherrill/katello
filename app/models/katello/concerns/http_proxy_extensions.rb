@@ -39,11 +39,10 @@ module Katello
           end
 
           repos = root_repos.collect(&:library_instance)
-          repos.flatten.uniq.each do |repo|
-            ForemanTasks.async_task(
-              ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-              repo)
-          end
+          ForemenTasks.async_task(
+            ::Actions::BulkAction, 
+            Actions::Katello::Repository::RefreshRepository, 
+            repos.flatten.uniq.order_by_root(:name));
         end
       end
 
