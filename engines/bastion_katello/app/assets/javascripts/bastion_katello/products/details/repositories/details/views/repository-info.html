@@ -137,25 +137,34 @@
         <dd bst-edit-custom
             readonly="denied('edit_products', product)"
             on-save"save(repository)">
-            <div translate>HttpProxyPolicy</div>
-            <select
-              ng-options="type.label as type.name for type in policies"
-              ng-model="repository.http_proxy_policy">
-            </select>
+          <div translate>HttpProxyPolicy</div>
+          <form role="form">
+            <div class="form-group">
+              <select class="form-control"
+                ng-options="type.label as type.name for type in policies"
+                ng-model="repository.http_proxy_policy">
+              </select>
+            </div>
+          </form>
 
-        <span ng-show="repository.http_proxy_policy === 'use_selected_http_proxy'">
-          <div translate>Http Proxy</div>
-          <span translate ng-show="proxies.length == 0">
-            No HTTP Proxies found
+          <span ng-show="repository.http_proxy_policy === 'use_selected_http_proxy'">
+            <div translate>Http Proxy</div>
+            <span translate ng-show="proxies.length == 0">
+              No HTTP Proxies found
+            </span>
+            <span ng-show="proxies.length > 0">
+              <form role="form">
+                <div class="form-group">
+                  <select class="form-control"
+                    ng-model="repository.http_proxy_id"
+                    ng-options="proxy.id as proxy.name for proxy in proxies"
+                    ng-show="proxies.length > 0">
+                  </select>
+                </div>
+              </form>
+            </span>
           </span>
-          <span ng-show="proxies.length > 0">
-            <select
-              ng-model="repository.http_proxy_id"
-              ng-options="proxy.id as proxy.name for proxy in proxies"
-              ng-show="proxies.length > 0">
-            </select>
-          </span>
-        </span>
+        </dd>
       </span>
 
       <span ng-if="repository.content_type === 'yum'">
