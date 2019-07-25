@@ -39,7 +39,7 @@ module Katello
           end
 
           repos = root_repos.collect(&:library_instance)
-          ForemenTasks.async_task(
+          ForemanTasks.async_task(
             ::Actions::BulkAction,
             Actions::Katello::Repository::RefreshRepository,
             repos.flatten.uniq.order_by_root(:name))
