@@ -17,7 +17,7 @@
  * @requires Architecture
  * @requires RepositoryTypesService
  * @requires YumContentUnits
- * #requires HttpProxyPolicies
+ * #requires HttpProxyPolicy
  *
  * @description
  *   Controls the creation of an empty Repository object for use by sub-controllers.
