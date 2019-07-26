@@ -119,7 +119,7 @@ angular.module('Bastion.repositories').controller('NewRepositoryController',
             repository.$save(success, error);
         };
 
-        $scope.repository.http_proxy_policy = HttpProxyPolicy.policies[0].label;
+        $scope.repository['http_proxy_policy'] = HttpProxyPolicy.policies[0].label;
         $scope.policies = HttpProxyPolicy.policies;
         $scope.proxies = [];
 
