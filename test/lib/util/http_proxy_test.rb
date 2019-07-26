@@ -18,12 +18,14 @@ module Katello
                          http_proxy_id: proxy.id)
 
         ForemanTasks.expects(:async_task).with(
+          ::Actions::BulkAction,
           ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-          repo)
+          [repo])
 
         ForemanTasks.expects(:async_task).with(
+          ::Actions::BulkAction,
           ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-          @no_proxy_repo).never
+          [@no_proxy_repo]).never
 
         proxy.update(url: 'http://foobar.com')
       end
@@ -35,12 +37,14 @@ module Katello
                          http_proxy_id: proxy.id)
 
         ForemanTasks.expects(:async_task).with(
+          ::Actions::BulkAction,
           ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-          repo)
+          [repo])
 
         ForemanTasks.expects(:async_task).with(
+          ::Actions::BulkAction,
           ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-          @no_proxy_repo).never
+          [@no_proxy_repo]).never
 
         proxy.update(username: 'bozo')
       end
@@ -52,12 +56,14 @@ module Katello
                          http_proxy_id: proxy.id)
 
         ForemanTasks.expects(:async_task).with(
+          ::Actions::BulkAction,
           ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-          repo)
+          [repo])
 
         ForemanTasks.expects(:async_task).with(
+          ::Actions::BulkAction,
           ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-          @no_proxy_repo).never
+          [@no_proxy_repo]).never
 
         proxy.update(password: 'sekr0t')
       end
@@ -67,13 +73,16 @@ module Katello
         repo = katello_repositories(:rhel_6_x86_64)
         repo.root.update(http_proxy_policy: Katello::RootRepository::GLOBAL_DEFAULT_HTTP_PROXY)
 
+        global_repos = RootRepository.with_global_proxy.uniq.collect(&:library_instance)
         ForemanTasks.expects(:async_task).with(
+          ::Actions::BulkAction,
           ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-          repo)
+          global_repos)
 
         ForemanTasks.expects(:async_task).with(
+          ::Actions::BulkAction,
           ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-          @no_proxy_repo).never
+          [@no_proxy_repo]).never
 
         name = Setting[:content_default_http_proxy]
         ::HttpProxy.find_by(name: name).update(password: 'sekr0t')
