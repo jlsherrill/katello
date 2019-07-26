@@ -40,10 +40,12 @@ module Katello
 
           repos = root_repos.uniq.collect(&:library_instance)
 
-          ForemanTasks.async_task(
-            ::Actions::BulkAction,
-            ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-            repos) unless repos.empty?
+          unless repos.empty?
+            ForemanTasks.async_task(
+              ::Actions::BulkAction,
+              ::Actions::Katello::Repository::UpdateHttpProxyDetails,
+              repos)
+          end
         end
       end
 
