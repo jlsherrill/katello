@@ -42,7 +42,7 @@ module Katello
           ForemanTasks.async_task(
             ::Actions::BulkAction,
             Actions::Katello::Repository::RefreshRepository,
-            repos.flatten.uniq.order_by_root(:name))
+            repos.order_by_root(:name))
         end
       end
 
