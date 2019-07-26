@@ -44,7 +44,7 @@ module Katello
             ForemanTasks.async_task(
               ::Actions::BulkAction,
               ::Actions::Katello::Repository::UpdateHttpProxyDetails,
-              repos)
+              repos.sort_by(&:pulp_id))
           end
         end
       end
