@@ -6,8 +6,8 @@ module Actions
 
         def plan(repository)
           plan_pulp_action(
-            [::Actions::Pulp::Orchestration::Repository::Refresh,
-             ::Actions::Pulp3::Repository::UpdateRemote],
+            [Actions::Pulp::Orchestration::Repository::Refresh,
+             Actions::Pulp3::Repository::UpdateRemote],
             repository,
             SmartProxy.pulp_master)
         end
