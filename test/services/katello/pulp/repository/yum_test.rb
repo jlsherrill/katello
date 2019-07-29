@@ -170,7 +170,8 @@ module Katello
           @master = FactoryBot.create(:smart_proxy, :default_smart_proxy)
           User.current = users(:admin)
 
-          @default_proxy = FactoryBot.create(:http_proxy, name: 'best proxy')
+          @default_proxy = FactoryBot.create(:http_proxy, name: 'best proxy',
+                                             url: "http://url_1");
           Setting.find_by(name: 'content_default_http_proxy').update(
             value: @default_proxy.name)
           @repo = katello_repositories(:fedora_17_x86_64)
