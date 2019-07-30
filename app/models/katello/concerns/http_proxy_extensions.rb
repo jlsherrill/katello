@@ -7,7 +7,7 @@ module Katello
         has_many :root_repositories, :class_name => "::Katello::RootRepository", :foreign_key => :http_proxy_id,
           :inverse_of => :http_proxy, :dependent => :nullify
         after_update :update_default_proxy_setting
-        after_update :update_repository_proxy_details
+        after_commit :update_repository_proxy_details
 
         def self.default_global_content_proxy
           if Setting[:content_default_http_proxy]
