@@ -31,7 +31,13 @@ angular.module('Bastion.components.formatters').filter('upstreamPasswordFilter',
 
 angular.module('Bastion.components.formatters').filter('httpProxyDetailsFilter', ['HttpProxyPolicy', function (HttpProxyPolicy) {
     return function (displayValue, repository) {
-        return '%(proxyPolicy) - %(proxyName)'.replace('%(proxyPolicy)', HttpProxyPolicy.displayHttpProxyPolicyName(repository["http_proxy_policy"])).replace('%(proxyName)', repository["http_proxy"].name);
+        var message = '%(proxyPolicy)'.replace('%(proxyPolicy)', HttpProxyPolicy.displayHttpProxyPolicyName(repository["http_proxy_policy"]));
+
+        if (repository["http_proxy_policy"] === 'use_selected_http_proxy' && repository["http_proxy"]) {
+            message += " (" + repository["http_proxy"].name + ")";
+        }
+
+        return message;
     };
 }]);
 
