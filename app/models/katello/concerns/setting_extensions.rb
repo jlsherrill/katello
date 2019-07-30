@@ -8,7 +8,7 @@ module Katello
           if: ->(setting) { setting.name == 'default_download_policy' }
 
         after_save :recalculate_errata_status
-        after_save :update_global_proxies
+        after_commit :update_global_proxies
       end
 
       def recalculate_errata_status
