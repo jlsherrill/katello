@@ -150,7 +150,6 @@ module Katello
         ::Actions::BulkAction,
         ::Actions::Katello::Repository::UpdateHttpProxyDetails,
         [@no_proxy_repo]).never
-
     end
   end
 end
