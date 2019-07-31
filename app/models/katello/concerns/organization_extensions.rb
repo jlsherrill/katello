@@ -50,6 +50,14 @@ module Katello
         # so that it will execute after :dependent => :destroy
         before_destroy :destroy_taxable_taxonomies
 
+        module Prepended
+          def update_action
+            Actions::Katello::Foo
+          end
+        end
+        prepend Prepended
+
+
         def default_content_view
           ContentView.default.where(:organization_id => self.id).first
         end
