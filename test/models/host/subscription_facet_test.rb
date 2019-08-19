@@ -242,13 +242,6 @@ module Katello
       assert_equal "Host with name %s is currently registered to a different org, please migrate host to %s." % [host.name, org2.name], error.message
     end
 
-    def test_find_host_registered
-      # the hostname and dmi.system.uuid don't match other hosts but it's registered already
-
-      error = assert_raises(Katello::Errors::RegistrationError) { Katello::Host::SubscriptionFacet.find_host({'network.hostname' => host.name, 'dmi.system.uuid' => nil}, org) }
-      assert_equal find_host_error % host.name, error.message
-    end
-
     def test_find_host_existing_uuid
       # find host by dmi.system.uuid, no hostname match
       FactValue.create(value: "existing_system_uuid", host: host, fact_name: uuid_fact_name)
@@ -257,6 +250,14 @@ module Katello
 
       error = assert_raises(Katello::Errors::RegistrationError) { Katello::Host::SubscriptionFacet.find_host(facts, org) }
       assert_equal find_host_error % host.name, error.message
+    end
+
+    def test_find_host_null_uuid_existing_host
+      # this test case is critical for bootstrap.py which creates a host via API (which lacks the dmi uuid fact)
+      # and *then* registers to it with subscription-manager
+      assert_empty host.fact_values
+
+      assert_equal host, Katello::Host::SubscriptionFacet.find_host({'network.hostname' => host.name, 'dmi.system.uuid' => 'actual-uuid'}, org)
     end
 
     def test_find_host_nil_uuid
@@ -268,7 +269,7 @@ module Katello
       fv.value = "something"
       fv.save!
       error = assert_raises(Katello::Errors::RegistrationError) { Katello::Host::SubscriptionFacet.find_host({'network.hostname' => host.name, 'dmi.system.uuid' => nil}, org) }
-      assert_equal find_host_error % host.name, error.message
+      assert_match(/DMI UUID that differs/, error.message)
     end
 
     def test_find_host_existing_uuid_and_name_multiple
@@ -291,7 +292,7 @@ module Katello
       facts = {'dmi.system.uuid' => 'inexistent_uuid', 'network.hostname' => host.name}
 
       error = assert_raises(Katello::Errors::RegistrationError) { Katello::Host::SubscriptionFacet.find_host(facts, org) }
-      assert_equal find_host_error % host.name, error.message
+      assert_match(/DMI UUID that differs/, error.message)
     end
 
     def test_find_host_existing_uuid_and_name
@@ -314,6 +315,14 @@ module Katello
 
         assert_nil Katello::Host::SubscriptionFacet.find_host(facts, org)
       end
+    end
+
+    def test_find_host_build_matching_hostname_new_uuid
+      host = FactoryBot.create(:host, :managed, organization: org, build: true)
+      FactValue.create(value: SecureRandom.uuid, host: host, fact_name: uuid_fact_name)
+
+      facts = {'network.hostname' => host.name, 'dmi.system.uuid' => SecureRandom.uuid}
+      assert_equal host, Katello::Host::SubscriptionFacet.find_host(facts, org)
     end
 
     def test_find_or_create_host_with_org

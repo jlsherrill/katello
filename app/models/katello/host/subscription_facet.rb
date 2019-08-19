@@ -264,8 +264,19 @@ module Katello
                    {:org_name => organization.name, :host_name => host_name }
         end
 
-        if hosts_size == 1 && hosts.joins(:subscription_facet).empty?
-          return hosts.first
+        if hosts_size == 1
+          host = hosts.first
+
+          if host.name == host_name
+            unless host.build
+              found_uuid = host.fact_values.where(fact_name_id: uuid_fact_id).first
+              if found_uuid && found_uuid.value != host_uuid
+                fail Katello::Errors::RegistrationError, _("This host is reporting a DMI UUID that differs from the existing registration.")
+              end
+            end
+
+            return host
+          end
         end
 
         hostnames = hosts.pluck(:name).sort.join(', ')
