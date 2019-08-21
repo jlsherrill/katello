@@ -1,4 +1,4 @@
-import { snakeCase } from 'lodash';
+import { snakeCase, camelCase } from 'lodash';
 
 export default {
   urlBuilder(...parts) {
@@ -19,3 +19,5 @@ const propsToCase = (casingFn, errorMsg, ob) => {
 export const propsToSnakeCase = ob =>
   propsToCase(snakeCase, 'propsToSnakeCase only takes objects', ob);
 
+export const propsToCamelCase = ob =>
+  propsToCase(camelCase, 'propsToCamelCase only takes objects', ob);
