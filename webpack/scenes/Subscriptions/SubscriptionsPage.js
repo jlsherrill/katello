@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 import { translate as __ } from 'foremanReact/common/I18n';
+import { propsToCamelCase } from 'foremanReact/common/helpers';
 import { isEmpty, isEqual } from 'lodash';
 import { Grid, Row, Col } from 'patternfly-react';
 import { renderTaskFinishedToast, renderTaskStartedToast } from '../Tasks/helpers';
@@ -168,8 +169,15 @@ class SubscriptionsPage extends Component {
       deleteButtonDisabled, disableDeleteButton, enableDeleteButton,
       searchQuery, updateSearchQuery,
       taskModalOpened,
-      tasks = [], subscriptions, organization, subscriptionTableSettings,
+      tasks = [], activePermissions, subscriptions, organization, subscriptionTableSettings,
     } = this.props;
+    const permissions = propsToCamelCase(activePermissions);
+    const {
+      canDeleteManifest,
+      canManageSubscriptionAllocations,
+      canImportManifest,
+      canEditOrganizations,
+    } = permissions;
     const { disconnected } = subscriptions;
     const taskInProgress = tasks.length > 0;
     const disableManifestActions = taskInProgress || disconnected;
@@ -246,6 +254,7 @@ class SubscriptionsPage extends Component {
             <h1>{__('Subscriptions')}</h1>
 
             <SubscriptionsToolbar
+              canManageSubscriptionAllocations={canManageSubscriptionAllocations}
               disableManifestActions={disableManifestActions}
               disableManifestReason={this.getDisabledReason()}
               disableDeleteButton={deleteButtonDisabled}
@@ -263,6 +272,9 @@ class SubscriptionsPage extends Component {
             />
 
             <ManageManifestModal
+              canImportManifest={canImportManifest}
+              canDeleteManifest={canDeleteManifest}
+              canEditOrganizations={canEditOrganizations}
               showModal={manifestModalOpened}
               taskInProgress={taskInProgress}
               disableManifestActions={disableManifestActions}
@@ -275,6 +287,7 @@ class SubscriptionsPage extends Component {
 
             <div id="subscriptions-table" className="modal-container">
               <SubscriptionsTable
+                canManageSubscriptionAllocations={canManageSubscriptionAllocations}
                 loadSubscriptions={this.props.loadSubscriptions}
                 tableColumns={columns}
                 updateQuantity={this.props.updateQuantity}
@@ -308,7 +321,15 @@ SubscriptionsPage.propTypes = {
   updateQuantity: PropTypes.func.isRequired,
   loadTableColumns: PropTypes.func.isRequired,
   taskDetails: PropTypes.shape({}),
-  subscriptions: PropTypes.shape({}).isRequired,
+  subscriptions: PropTypes.shape({
+    disconnected: PropTypes.bool,
+    tableColumns: PropTypes.array,
+    selectedTableColumns: PropTypes.array,
+  }).isRequired,
+  activePermissions: PropTypes.shape({
+    can_delete_manifest: PropTypes.bool,
+    can_manage_subscription_allocations: PropTypes.bool,
+  }),
   organization: PropTypes.shape({
     owner_details: PropTypes.shape({
       displayName: PropTypes.string,
@@ -352,6 +373,10 @@ SubscriptionsPage.defaultProps = {
   taskModalOpened: false,
   deleteButtonDisabled: true,
   subscriptionTableSettings: {},
+  activePermissions: {
+    can_import_manifest: false,
+    can_manage_subscription_allocations: false,
+  },
 };
 
 export default SubscriptionsPage;

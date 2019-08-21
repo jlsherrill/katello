@@ -15,6 +15,7 @@ const Table = ({
   rows,
   editing,
   groupedSubscriptions,
+  canManageSubscriptionAllocations,
 }) => {
   const allSubscriptionResults = subscriptions.results;
 
@@ -38,6 +39,7 @@ const Table = ({
     inlineEditController,
     selectionController,
     groupingController,
+    canManageSubscriptionAllocations,
   ).filter(column => tableColumns.includes(column.property) ||
     alwaysDisplayColumns.includes(column.property));
 
@@ -86,6 +88,7 @@ const Table = ({
 };
 
 Table.propTypes = {
+  canManageSubscriptionAllocations: PropTypes.bool,
   emptyState: PropTypes.shape({}).isRequired,
   tableColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   subscriptions: PropTypes.shape({
@@ -98,6 +101,10 @@ Table.propTypes = {
   editing: PropTypes.bool.isRequired,
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
 
+};
+
+Table.defaultProps = {
+  canManageSubscriptionAllocations: false,
 };
 
 export default Table;

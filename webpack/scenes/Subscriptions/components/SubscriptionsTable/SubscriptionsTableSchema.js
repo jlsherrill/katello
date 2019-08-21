@@ -12,10 +12,18 @@ import {
   collapseableAndSelectionCellFormatter,
 } from '../../../../move_to_foreman/components/common/table';
 
+function getEntitlementsFormatter(inlineEditController, canManageSubscriptionAllocations) {
+  if (canManageSubscriptionAllocations) {
+    return entitlementsInlineEditFormatter(inlineEditController);
+  }
+  return cellFormatter;
+}
+
 export const createSubscriptionsTableSchema = (
   inlineEditController,
   selectionController,
   groupingController,
+  hasPermission,
 ) => [
   {
     property: 'select',
@@ -137,7 +145,7 @@ export const createSubscriptionsTableSchema = (
       formatters: [headerFormatter],
     },
     cell: {
-      formatters: [entitlementsInlineEditFormatter(inlineEditController)],
+      formatters: [getEntitlementsFormatter(inlineEditController, hasPermission)],
     },
   },
 ];
