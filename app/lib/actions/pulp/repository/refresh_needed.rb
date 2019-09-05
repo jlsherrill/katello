@@ -22,7 +22,7 @@ module Actions
             repository = repository.nonpersisted_repository
           end
           content_view = ::Katello::ContentView.find_by(:id => input[:content_view_id]) if input[:content_view_id]
-          smart_proxy = SmartProxy.find(input[:smart_proxy_id])
+          smart_proxy = SmartProxy.unscoped.find(input[:smart_proxy_id])
           smart_proxy_service = ::Katello::Pulp::SmartProxyRepository.new(smart_proxy)
 
           need_updates = smart_proxy_service.repos_needing_updates(environment, content_view, repository)
