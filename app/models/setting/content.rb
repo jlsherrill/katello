@@ -122,7 +122,10 @@ class Setting::Content < Setting
         self.set('host_dmi_uuid_duplicates',
                  N_("If hosts fail to register because of duplicate DMI UUIDs " \
                     "add their comma-separated values here. Subsequent registrations will generate a unique DMI UUID for the affected hosts."),
-                 [], N_('Host Duplicate DMI UUIDs'))
+                 [], N_('Host Duplicate DMI UUIDs')),
+        self.set('host_profile_assume', N_("Allow new Host registrations to assume registered profiles with matching hostname " \
+                    "as long as the registering DMI UUID is not used by another host."),
+                 true, N_('Host Profile Assume'))
       ].each { |s| self.create! s.update(:category => "Setting::Content") }
     end
     true
