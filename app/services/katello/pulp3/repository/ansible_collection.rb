@@ -32,6 +32,10 @@ module Katello
           PulpAnsibleClient::DistributionsAnsibleApi.new(api_client)
         end
 
+        def partial_repo_path
+          "/pulp_ansible/galaxy/#{repo.relative_path}/api/v2/collections"
+        end
+
         def remote_options
           if root.url.blank?
             super
