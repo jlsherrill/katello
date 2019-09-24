@@ -82,7 +82,7 @@ module Actions
                 if skip_metadata_check
                   plan_action(Katello::Repository::MetadataGenerate,
                               repo,
-                              capsule_id: smart_proxy_service.smart_proxy.id,
+                              smart_proxy: smart_proxy_service.smart_proxy,
                               force: true)
                 end
                 if repo.is_a?(::Katello::Repository) &&
