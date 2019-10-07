@@ -13,6 +13,7 @@ import { moduleStreamDetails } from '../../scenes/ModuleStreams/Details';
 import { reducers as systemStatuses } from '../../components/extensions/about';
 import { ansibleCollections } from '../../scenes/AnsibleCollections';
 import { ansibleCollectionDetails } from '../../scenes/AnsibleCollections/Details';
+import {fruits} from '../../scenes/Fruits';
 
 export default combineReducers({
   organization,
@@ -24,6 +25,7 @@ export default combineReducers({
   subscriptionDetails,
   setOrganization,
   moduleStreams,
+  fruits,
   moduleStreamDetails,
   ansibleCollections,
   ansibleCollectionDetails,

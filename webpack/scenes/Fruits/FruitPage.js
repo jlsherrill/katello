@@ -3,18 +3,6 @@ import React, { Component } from 'react';
 import { Table as ForemanTable } from 'foremanReact/components/common/table';
 import { columns } from './FruitTableSchema';
 
-// This is dummy data; you will need to replace it with real data from your API call.
-const results = [
-  {
-    name: 'idk',
-    color: 'what color is fruit',
-  },
-  {
-    name: 'put more fruit data here',
-    color: 'okay!',
-  },
-];
-
 class FruitPage extends Component {
   // eslint-disable-next-line no-useless-constructor
   constructor(props) {
@@ -22,17 +10,21 @@ class FruitPage extends Component {
   }
 
   componentDidMount() {
-    // Fetch data here. This will be done with a redux action
+    this.props.fetchFruits();
   }
 
   render() {
     return (
+        <div>
+        <p>blahblah</p>
       <ForemanTable
-        rows={results}
+        rows={this.props.results}
         columns={columns}
       />
+    </div>
     );
   }
 }
 
 export default FruitPage;
+FruitPage.defaultProps = {results: []};
