@@ -164,7 +164,7 @@ module Katello
       end
 
       def with_pulp_id(unit_pulp_ids)
-        where(:pulp_id => unit_pulp_ids)
+        where('pulp_id in (?)', unit_pulp_ids)
       end
 
       def update_repository_associations(units_json, additive = false)
