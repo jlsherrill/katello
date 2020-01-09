@@ -47,6 +47,10 @@ module Katello
         update_hypervisor(consumer_params)
         update_guests(consumer_params)
 
+        if consumer_params['facts']
+          self.dmi_uuid = consumer_params['facts']['dmi.system.uuid']
+        end
+
         self.autoheal = consumer_params['autoheal'] unless consumer_params['autoheal'].blank?
         self.service_level = consumer_params['serviceLevel'] unless consumer_params['serviceLevel'].nil?
         self.registered_at = consumer_params['created'] unless consumer_params['created'].blank?
