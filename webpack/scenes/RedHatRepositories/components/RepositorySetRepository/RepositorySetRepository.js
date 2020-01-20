@@ -16,12 +16,11 @@ class RepositorySetRepository extends Component {
 
     this.repoForAction = () => {
       const {
-        productId, contentId, arch, displayArch, releasever, label,
+        productId, contentId, arch, releasever, label,
       } = this.props;
 
-      const derivedArch = arch || displayArch;
       return {
-        arch: derivedArch,
+        arch,
         productId,
         contentId,
         releasever,
