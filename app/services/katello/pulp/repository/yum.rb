@@ -92,7 +92,7 @@ module Katello
           tasks << smart_proxy.pulp_api.extensions.rpm.copy(repo.pulp_id, destination_repo.pulp_id, modular_includes)
 
           [:srpm, :errata, :package_group, :package_environment,
-           :yum_repo_metadata_file, :distribution, :module, :module_default].each do |type|
+           :yum_repo_metadata_file, :distribution, :module, :module_default, :drpm].each do |type|
             tasks << smart_proxy.pulp_api.extensions.send(type).copy(repo.pulp_id, destination_repo.pulp_id)
           end
           tasks

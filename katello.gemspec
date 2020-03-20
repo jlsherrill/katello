@@ -31,7 +31,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "rest-client"
 
   gem.add_dependency "rabl"
-  gem.add_dependency "foreman-tasks", "~> 0.13", ">= 0.14.1"
+  gem.add_dependency "foreman-tasks", "0.15.11.1"
   gem.add_dependency "dynflow", ">= 1.2.0"
   gem.add_dependency "activerecord-import"
 
@@ -40,7 +40,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "apipie-rails", ">= 0.5.14"
 
   # Pulp
-  gem.add_dependency "runcible", ">= 2.12.1", "< 3.0.0"
+  gem.add_dependency "runcible", ">= 2.13.0", "< 3.0.0"
   gem.add_dependency "anemone"
   gem.add_dependency "zest"
   # UI
