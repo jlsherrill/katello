@@ -1,5 +1,6 @@
 require File.expand_path("../engine", File.dirname(__FILE__))
 require "#{Katello::Engine.root}/app/services/katello/pulp3/migration_switchover"
+load "#{Katello::Engine.root}/lib/katello/tasks/common.rake"
 
 namespace :katello do
   desc "Runs a Pulp 3 migration of pulp3 hrefs to pulp ids for supported content types."
